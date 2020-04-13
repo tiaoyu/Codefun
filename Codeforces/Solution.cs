@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Codeforces
 {
-    class Solution
+    partial class Solution
     {
         public void LittleArtem_632_div2()
         {
@@ -165,5 +165,134 @@ namespace Codeforces
                 Console.WriteLine(cnt + minh);
             }
         }
+
+        #region Codeforces Round #634 (Div. 3)
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void CandiesandTwoSisters_634_div3()
+        {
+            var n = int.Parse(Console.ReadLine());
+            while (n-- > 0)
+            {
+                var m = long.Parse(Console.ReadLine());
+                if (m == 1 || m == 2)
+                    Console.WriteLine(0);
+                else
+                    Console.WriteLine((m - 1) >> 1);
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void ConstructTheString_634_div3()
+        {
+            var latin = "abcdefghijklmnopqrstuvwxyz";
+            var ans = new List<char>();
+            var m = int.Parse(Console.ReadLine());
+            while (m-- > 0)
+            {
+                var tmp = Console.ReadLine().Split(' ').Select(x => Convert.ToInt32(x)).ToArray();
+                var n = tmp[0];
+                var a = tmp[1];
+                var b = tmp[2];
+                ans.AddRange(latin.Substring(0, b));
+                var l = a - b;
+                while (l-- > 0)
+                {
+                    ans.Add(latin[b - 1]);
+                }
+                var i = 0;
+                var t = n - a;
+                while (i < t)
+                {
+                    ans.Add(ans[i++]);
+                }
+                foreach (var r in ans)
+                {
+                    Console.Write(r);
+                }
+                Console.WriteLine();
+                ans.Clear();
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void TwoTeamsComposing_634_div3()
+        {
+            var a = new HashSet<int>();
+            var b = new Dictionary<int, int>();
+            var m = int.Parse(Console.ReadLine());
+            while (m-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                var tmp = Console.ReadLine().Split(' ').Select(x => Convert.ToInt32(x)).ToArray();
+                for (var i = 0; i < n; ++i)
+                {
+                    a.Add(tmp[i]);
+
+                    if (!b.ContainsKey(tmp[i]))
+                        b.Add(tmp[i], 1);
+                    else
+                        b[tmp[i]]++;
+                }
+                var max = 0;
+                for (var i = 0; i < n; ++i)
+                {
+                    if (b[tmp[i]] > max)
+                    {
+                        max = b[tmp[i]];
+                    }
+                }
+                if (max > a.Count)
+                {
+                    Console.WriteLine(a.Count);
+                }
+                else if (max == a.Count)
+                {
+                    Console.WriteLine(a.Count - 1);
+                }
+                else
+                {
+                    Console.WriteLine(max);
+                }
+                a.Clear();
+                b.Clear();
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void Anti_Sudoku_634_div3()
+        {
+            var n = int.Parse(Console.ReadLine());
+            while (n-- > 0)
+            {
+                for (var i = 0; i < 9; ++i)
+                {
+                    var tmp = Console.ReadLine();
+                    if (i % 3 == 0)
+                    {
+                        Console.WriteLine(tmp.Replace(tmp[i / 3], tmp[1 + i / 3]));
+                    }
+                    else if (i % 3 == 1)
+                    {
+                        Console.WriteLine(tmp.Replace(tmp[3 + i / 3], tmp[4 + i / 3]));
+                    }
+                    else if (i % 3 == 2)
+                    {
+                        if (i == 8)
+                            Console.WriteLine(tmp.Replace(tmp[6 + i / 3], tmp[5 + i / 3]));
+                        else
+                            Console.WriteLine(tmp.Replace(tmp[6 + i / 3], tmp[7 + i / 3]));
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }
