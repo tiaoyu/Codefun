@@ -9,12 +9,16 @@ namespace Codeforces
         static void Main(string[] args)
         {
             var s = new Solution();
-            s.Anti_Sudoku_634_div3();
+            s.XeniaandColorfulGems();
         }
     }
 
     public partial class Solution
     {
+        public void XeniaandColorfulGems()
+        {
+
+        }
     }
 }
 

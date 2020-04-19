@@ -294,5 +294,98 @@ namespace Codeforces
             }
         }
         #endregion
+
+        #region
+        public void GuessTheNumber()
+        {
+            var l = 1;
+            var r = 1000000;
+            while (l != r)
+            {
+                var mid = (l + r + 1) / 2;
+                Console.WriteLine(mid);
+                Console.Out.Flush();
+
+                var sign = Console.ReadLine();
+                if ("<".Equals(sign))
+                {
+                    r = mid - 1;
+                }
+                else
+                    l = mid;
+            }
+            Console.WriteLine($"! {l}");
+            Console.Out.Flush();
+        }
+        #endregion
+
+        #region
+        public void IchihimeAndTriangle_635_div2()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var tmp = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                var a = tmp[0];
+                var b = tmp[1];
+                var c = tmp[2];
+                var d = tmp[3];
+
+                var x = b;
+                var y = c;
+                var z = c;
+
+                if (x + y > z)
+                {
+                    Console.WriteLine(x + " " + y + " " + z);
+                    Console.Out.Flush();
+                }
+            }
+        }
+
+        public void KanaandDragonQuestgame_635_div2()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var tmp = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                var x = tmp[0];
+                var n = tmp[1];
+                var m = tmp[2];
+
+                var ans = false;
+
+                var mHit = m * 10;
+                if (x - mHit <= 0)
+                {
+                    ans = true;
+                }
+                else
+                {
+                    while (n-- > 0)
+                    {
+                        x = (x / 2 + 10);
+                        if (x <= mHit)
+                        {
+                            ans = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (ans)
+                {
+                    Console.WriteLine("YES");
+                    Console.Out.Flush();
+                }
+                else
+                {
+                    Console.WriteLine("NO");
+                    Console.Out.Flush();
+                }
+
+            }
+        }
+        #endregion
     }
 }

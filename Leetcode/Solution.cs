@@ -240,5 +240,181 @@ namespace Leetcode
             }
             return res;
         }
+
+        #region leetcode 第 185 场周赛
+        /// <summary>
+        /// AC
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public string Reformat(string s)
+        {
+            var res = new StringBuilder();
+            var number = new Queue<char>();
+            var latin = new Queue<char>();
+            foreach (var c in s)
+            {
+                if (c >= 'a' && c <= 'z')
+                {
+                    latin.Enqueue(c);
+                }
+                else if (c >= '0' && c <= '9')
+                {
+                    number.Enqueue(c);
+                }
+            }
+
+            if (Math.Abs(latin.Count - number.Count) > 1)
+            {
+                return "";
+            }
+
+            var lc = latin.Count;
+            var nc = number.Count;
+            if (lc > nc)
+            {
+                for (var i = 0; i < lc; ++i)
+                {
+                    if (latin.Count > 0)
+                        res.Append(latin.Dequeue());
+                    if (number.Count > 0)
+                        res.Append(number.Dequeue());
+                }
+            }
+            else
+            {
+                for (var i = 0; i < nc; ++i)
+                {
+                    if (number.Count > 0)
+                        res.Append(number.Dequeue());
+                    if (latin.Count > 0)
+                        res.Append(latin.Dequeue());
+                }
+            }
+
+            return res.ToString();
+        }
+
+        /// <summary>
+        /// WA
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <returns></returns>
+        public IList<IList<string>> DisplayTable(IList<IList<string>> orders)
+        {
+            var res = new SortedDictionary<int, Dictionary<string, int>>();
+            var tableSet = new HashSet<string>();
+
+
+            foreach (var customer in orders)
+            {
+                var cm = int.Parse(customer[1]);
+                tableSet.Add(customer[2]);
+                if (!res.ContainsKey(cm))
+                {
+                    res.Add(cm, new Dictionary<string, int>());
+                }
+
+                var table = res[cm];
+
+                if (!table.ContainsKey(customer[2]))
+                {
+                    table[customer[2]] = 1;
+                }
+                else
+                {
+                    table[customer[2]]++;
+                }
+            }
+            var tableList = new List<string>(tableSet);
+
+            tableList.Sort((s1, s2) =>
+            {
+                for (var i = 0; i < s1.Length; ++i)
+                {
+                    if (i >= s2.Length)
+                        return 1;
+                    if (s1[i] == s2[i]) continue;
+
+                    return s1[i] - s2[i];
+                }
+                return 0;
+            });
+
+            var ans = new List<List<string>>();
+
+            foreach (var (tableNo, table) in res)
+            {
+                var dishList = new List<string>();
+                dishList.Add($"{tableNo}");
+                foreach (var dish in tableList)
+                {
+                    if (table.ContainsKey(dish))
+                        dishList.Add($"{table[dish]}");
+                    else dishList.Add("0");
+                }
+                ans.Add(dishList);
+            }
+
+            tableList.Insert(0, "Table");
+
+            ans.Insert(0, tableList);
+
+            //foreach (var i in ans)
+            //{
+            //    foreach (var j in i)
+            //    {
+            //        Console.Write(j + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            return ans.ToArray();
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        /// <param name="croakOfFrogs"></param>
+        /// <returns></returns>
+        public int MinNumberOfFrogs(string croakOfFrogs)
+        {
+            var staticCh = new char[200];
+            staticCh['c'] = 'k';
+            staticCh['r'] = 'c';
+            staticCh['o'] = 'r';
+            staticCh['a'] = 'o';
+            staticCh['k'] = 'a';
+
+            var chList = new int[200];
+            chList['c'] = 0;
+            chList['r'] = 0;
+            chList['o'] = 0;
+            chList['a'] = 0;
+            chList['k'] = 0;
+
+
+
+            var ans = 0;
+            foreach (var c in croakOfFrogs)
+            {
+                chList[c]++;
+                if (c != 'c' && chList[c] > chList[staticCh[c]])
+                    return -1;
+
+                if (c == 'k')
+                {
+                    --chList['c'];
+                    --chList['r'];
+                    --chList['o'];
+                    --chList['a'];
+                    --chList['k'];
+                }
+                ans = Math.Max(chList['c'], ans);
+            }
+
+            return chList['c'] != 0 ? -1 : ans;
+        }
+        #endregion
     }
 }

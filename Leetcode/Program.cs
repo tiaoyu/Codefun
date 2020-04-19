@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Leetcode
 {
@@ -7,7 +8,12 @@ namespace Leetcode
         static void Main(string[] args)
         {
             Solution solution = new Solution();
-            Console.WriteLine(solution.LengthOfLIS(new int[] { 10, 9, 2, 5, 3, 7, 101, 18 }));
+
+            Console.WriteLine(solution.MinNumberOfFrogs("ccrrooaakk"));
+            Console.WriteLine(solution.MinNumberOfFrogs("croakcroa"));
+            Console.WriteLine(solution.MinNumberOfFrogs("croakcroak"));
+            Console.WriteLine(solution.MinNumberOfFrogs("crcoakroak"));
+            Console.WriteLine(solution.MinNumberOfFrogs("croakcrook"));
         }
     }
 }
