@@ -1,15 +1,15 @@
-﻿<Properties StartupConfiguration="{2BDFBCEC-46DE-47FF-A4FE-CFDFDBA9A33C}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Leetcode/Solution.cs">
+﻿<Properties StartupConfiguration="{8C97A42E-2482-4339-87CC-63C6B269E7C7}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Codeforces/Program.cs">
     <Files>
-      <File FileName="Leetcode/Program.cs" Line="10" Column="10" />
-      <File FileName="Leetcode/Solution.cs" Line="6" Column="1" />
+      <File FileName="Codeforces/Program.cs" Line="12" Column="35" />
+      <File FileName="Codeforces/Solution.cs" Line="392" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Codefun" expanded="True">
-            <Node name="Leetcode" expanded="True">
-              <Node name="Solution.cs" selected="True" />
+            <Node name="Codeforces" expanded="True">
+              <Node name="Program.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -18,6 +18,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.Leetcode PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Codeforces PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

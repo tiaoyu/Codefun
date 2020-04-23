@@ -387,5 +387,97 @@ namespace Codeforces
             }
         }
         #endregion
+
+        #region round 363 div3
+        public void Candies_363_div3()
+        {
+            var t = int.Parse(Console.ReadLine());
+            var res = new int[33];
+            for (var i = 2; i < 33; ++i)
+                res[i] = (int)Math.Pow(2, i) - 1;
+
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                for (var i = 2; i < 33; ++i)
+                {
+                    if (n % res[i] == 0)
+                    {
+                        Console.WriteLine(n / res[i]);
+                        break;
+                    }
+                }
+            }
+        }
+        public void BalancedArray_363_div3()
+        {
+            var t = int.Parse(Console.ReadLine());
+
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                if (n % 2 == 0 && (n / 2) % 2 != 0)
+                {
+                    Console.WriteLine("NO");
+                    continue;
+                }
+                else
+                {
+                    Console.WriteLine("YES");
+                }
+
+                n /= 2;
+                for (var i = 1; i <= n; ++i)
+                {
+                    Console.Write($"{i * 2} ");
+                }
+
+                for (var i = 1; i <= n - 1; ++i)
+                {
+                    Console.Write($"{i * 2 - 1} ");
+                }
+                Console.WriteLine(n * 2 + n - 1);
+            }
+        }
+        public void AlternatingSubsequence_363_div3()
+        {
+            var t = int.Parse(Console.ReadLine());
+
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                var arr = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var sum = 0L;
+                var isPositive = true;
+                var tmp = 0L;
+                for (var i = 0; i < n; ++i)
+                {
+                    if (i == 0)
+                    {
+                        isPositive = arr[i] > 0;
+                        tmp = arr[i];
+                        continue;
+                    }
+                    if (arr[i] > 0 && isPositive || arr[i] < 0 && !isPositive)
+                    {
+                        tmp = Math.Max(arr[i], tmp);
+                    }
+                    else if (arr[i] > 0 && !isPositive)
+                    {
+                        sum += tmp;
+                        tmp = arr[i];
+                        isPositive = true;
+                    }
+                    else if (arr[i] < 0 && isPositive)
+                    {
+                        sum += tmp;
+                        tmp = arr[i];
+                        isPositive = false;
+                    }
+                }
+                Console.WriteLine(sum + tmp);
+            }
+        }
+        #endregion
     }
 }
