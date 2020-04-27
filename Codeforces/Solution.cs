@@ -479,5 +479,48 @@ namespace Codeforces
             }
         }
         #endregion
+
+        #region edu round 86 div2
+        public void RoadToZero_edu_round_86_div2()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var tmp1 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var tmp2 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+
+                var x = tmp1[0];
+                var y = tmp1[1];
+
+                var a = tmp2[0];
+                var b = tmp2[1];
+
+                if (x == 0 && y == 0)
+                    Console.WriteLine(0);
+                else if (x == 0)
+                {
+                    Console.WriteLine(y * a);
+                }
+                else if (y == 0)
+                {
+                    Console.WriteLine(x * a);
+                }
+                else
+                {
+                    if (a * 2 <= b)
+                    {
+                        Console.WriteLine((x + y) * a);
+                    }
+                    else
+                    {
+                        var min = Math.Min(x, y);
+                        var max = x + y - min;
+                        Console.WriteLine(min * b + (max - min) * a);
+                    }
+
+                }
+            }
+        }
+        #endregion
     }
 }

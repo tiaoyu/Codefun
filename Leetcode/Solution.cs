@@ -416,5 +416,88 @@ namespace Leetcode
             return chList['c'] != 0 ? -1 : ans;
         }
         #endregion
+
+        #region leetcode contest 186
+        public int MaxScore_5392(string s)
+        {
+            var one = 0;
+            foreach (var ch in s)
+            {
+                if (ch == '1')
+                {
+                    one++;
+                }
+            }
+
+            var zero = 0;
+
+            if (s[0] == '1') one--;
+            if (s[0] == '0') zero++;
+            var max = zero + one;
+
+            for (var i = 1; i < s.Length - 1; ++i)
+            {
+                if (s[i] == '0')
+                {
+                    max = Math.Max(max, ++zero + one);
+                }
+                else if (s[i] == '1')
+                {
+                    max = Math.Max(max, zero + --one);
+                }
+
+            }
+            return max;
+        }
+
+        public int MaxScore_5393(int[] cardPoints, int k)
+        {
+            int calc(int[] cardPoints, int l, int r, int index, int k)
+            {
+                if (k == 1) return cardPoints[index];
+
+                var lc = Math.Max(calc(cardPoints, l + 1, r, l + 1, k - 1), calc(cardPoints, l + 1, r, r, k - 1));
+                var rc = Math.Max(calc(cardPoints, l, r - 1, r - 1, k - 1), calc(cardPoints, l, r - 1, l, k - 1));
+
+                return Math.Max(lc + cardPoints[index], rc + cardPoints[index]);
+            }
+            var l = 0;
+            var r = cardPoints.Length - 1;
+            var ans = Math.Max(calc(cardPoints, l, r, l, k), calc(cardPoints, l, r, r, k));
+            return ans;
+        }
+
+        public int[] FindDiagonalOrder_5394(IList<IList<int>> nums)
+        {
+            var ans = new List<int>();
+
+            var inxArr = new List<int>();
+            var inx = new List<int>();
+            var dset = new HashSet<int>();
+            var maxCol = 0;
+            for(var i = 0; i < nums.Count; ++i)
+            {
+                maxCol = Math.Max(maxCol, nums[i].Count);
+                if (inxArr.Count < nums.Count) { inxArr.Add(i);inx.Add(-1); }
+
+                for (var j = inxArr.Count - 1; j >= 0; --j)
+                {
+                    if(inx[j] < nums[inxArr[j]].Count - 1)
+                    {
+                        ans.Add(nums[inxArr[j]][++inx[j]]);
+                    }
+                    else
+                    {
+                        dset.Add(inxArr[j]);
+                    }
+                }
+                foreach (var x in dset)
+                    inxArr.Remove(x);
+                dset.Clear();
+            }
+           
+            return ans.ToArray();
+        }
+        #endregion
     }
 }
