@@ -480,7 +480,7 @@ namespace Codeforces
         }
         #endregion
 
-        #region edu round 86 div2
+        #region edu round 686 div2
         public void RoadToZero_edu_round_86_div2()
         {
             var t = int.Parse(Console.ReadLine());
@@ -519,6 +519,26 @@ namespace Codeforces
                     }
 
                 }
+            }
+        }
+        #endregion
+
+        #region round 638 div2
+        /// <summary>
+        /// AC
+        /// A.Phoenix and Balance
+        /// </summary>
+        public void PhoenixandBalance_round_686_div2_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                //var tmp1 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = int.Parse(Console.ReadLine());
+                var ans = 0;
+                for (var i = 1; i <= n / 2; ++i)
+                    ans += 1 << i;
+                Console.WriteLine(ans);
             }
         }
         #endregion

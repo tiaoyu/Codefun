@@ -9,7 +9,6 @@ namespace Codeforces
         static void Main(string[] args)
         {
             var s = new Solution();
-            s.RoadToZero_edu_round_86_div2();
         }
     }
 
