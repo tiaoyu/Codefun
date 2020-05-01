@@ -418,6 +418,12 @@ namespace Leetcode
         #endregion
 
         #region leetcode contest 186
+        /// <summary>
+        /// AC
+        /// 1.分割字符串的最大得分
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public int MaxScore_5392(string s)
         {
             var one = 0;
@@ -450,53 +456,88 @@ namespace Leetcode
             return max;
         }
 
+        /// <summary>
+        /// AC
+        /// 2.可获得的最大点数
+        /// </summary>
+        /// <param name="cardPoints"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
         public int MaxScore_5393(int[] cardPoints, int k)
         {
-            int calc(int[] cardPoints, int l, int r, int index, int k)
+            var tmp = 0;
+            for (var i = 0; i < k; ++i)
             {
-                if (k == 1) return cardPoints[index];
-
-                var lc = Math.Max(calc(cardPoints, l + 1, r, l + 1, k - 1), calc(cardPoints, l + 1, r, r, k - 1));
-                var rc = Math.Max(calc(cardPoints, l, r - 1, r - 1, k - 1), calc(cardPoints, l, r - 1, l, k - 1));
-
-                return Math.Max(lc + cardPoints[index], rc + cardPoints[index]);
+                tmp += cardPoints[i];
             }
-            var l = 0;
-            var r = cardPoints.Length - 1;
-            var ans = Math.Max(calc(cardPoints, l, r, l, k), calc(cardPoints, l, r, r, k));
+            var ans = tmp;
+            for (var i = 0; i < k; ++i)
+            {
+                tmp -= cardPoints[k - i - 1];
+                tmp += cardPoints[cardPoints.Length - i - 1];
+                ans = Math.Max(ans, tmp);
+            }
+
             return ans;
         }
-
+        /// <summary>
+        /// AC
+        /// 3.对角线遍历 II
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
         public int[] FindDiagonalOrder_5394(IList<IList<int>> nums)
         {
             var ans = new List<int>();
 
-            var inxArr = new List<int>();
-            var inx = new List<int>();
-            var dset = new HashSet<int>();
-            var maxCol = 0;
-            for(var i = 0; i < nums.Count; ++i)
+            var tmp = new List<int[]>();
+            for (var i = 0; i < nums.Count; ++i)
             {
-                maxCol = Math.Max(maxCol, nums[i].Count);
-                if (inxArr.Count < nums.Count) { inxArr.Add(i);inx.Add(-1); }
-
-                for (var j = inxArr.Count - 1; j >= 0; --j)
+                for (var j = 0; j < nums[i].Count; ++j)
                 {
-                    if(inx[j] < nums[inxArr[j]].Count - 1)
-                    {
-                        ans.Add(nums[inxArr[j]][++inx[j]]);
-                    }
-                    else
-                    {
-                        dset.Add(inxArr[j]);
-                    }
+                    tmp.Add(new int[] { i, j });
                 }
-                foreach (var x in dset)
-                    inxArr.Remove(x);
-                dset.Clear();
             }
-           
+            tmp.Sort((v1, v2) =>
+            {
+
+                if (v1[0] + v1[1] == v2[0] + v2[1])
+                {
+                    return v2[1] - v1[1];
+                }
+                return v1[0] + v1[1] - v2[0] - v2[1];
+            });
+            foreach (var v in tmp)
+            {
+                ans.Add(nums[v[0]][v[1]]);
+            }
             return ans.ToArray();
+        }
+        /// <summary>
+        /// AC
+        /// 4.带限制的子序列和
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public int ConstrainedSubsetSum(int[] nums, int k)
+        {
+            var dp = new int[nums.Length];
+            var tmp = new SortedSet<int>();
+
+            dp[0] = nums[0];
+            var ans = dp[0];
+            tmp.Add(dp[0]);
+            for (var i = 1; i < nums.Length; ++i)
+            {
+                dp[i] = Math.Max(tmp.Max + nums[i], nums[i]);
+                ans = Math.Max(ans, dp[i]);
+
+                if (tmp.Count >= k)
+                    tmp.Remove(dp[i - k]);
+                tmp.Add(dp[i]);
+            }
+            return ans;
         }
         #endregion
     }
