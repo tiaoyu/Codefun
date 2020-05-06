@@ -542,5 +542,97 @@ namespace Codeforces
             }
         }
         #endregion
+
+        #region round 639 div2
+        /// <summary>
+        /// AC
+        /// A. 
+        /// </summary>
+        public void Puzzle_Pieces_round_639_div2_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var tmp = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = tmp[0];
+                var m = tmp[1];
+                if (n == 1 || m == 1 || (m == 2 && n == 2))
+                    Console.WriteLine("YES");
+                else
+                    Console.WriteLine("NO");
+            }
+        }
+
+        /// <summary>
+        /// B.
+        /// </summary>
+        public void Card_Constructions_round_639_div2_A()
+        {
+            var a = new int[26000];
+            for (var i = 1; i < 26000; ++i)
+            {
+                var sum = 2 * i + 3 * i * (i - 1) / 2;
+                a[i] = sum;
+            }
+
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                //var tmp = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = int.Parse(Console.ReadLine());
+
+                var ans = 0;
+                for (var i = 25999; i >= 1; --i)
+                {
+
+                    if (n % a[i] == 0)
+                    {
+                        ans += (n / a[i]);
+                        break;
+                    }
+
+                    if (n % a[i] < n)
+                    {
+                        ++ans;
+                        n -= a[i];
+                    }
+                }
+
+                Console.WriteLine(ans);
+            }
+        }
+
+        /// <summary>
+        /// C.
+        /// </summary>
+        public void Hilberts_Hotel_round_639_div2_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                //var tmp = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = int.Parse(Console.ReadLine());
+                var arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                var set = new HashSet<int>();
+                var flg = false;
+                for (var i = 0; i < n; ++i)
+                {
+                    for (var j = i + 1; j < n; ++j)
+                    {
+                        if (Math.Abs(arr[i] - arr[j]) == (j - i))
+                        {
+                            flg = true;
+                            break;
+                        }
+                    }
+                    if (flg) break;
+                }
+                if (flg)
+                    Console.WriteLine("NO");
+                else
+                    Console.WriteLine("YES");
+            }
+        }
+        #endregion
     }
 }
