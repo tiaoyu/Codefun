@@ -540,5 +540,147 @@ namespace Leetcode
             return ans;
         }
         #endregion
+
+        #region contest 187
+        /// <summary>
+        /// AC
+        /// A. 旅行终点站
+        /// </summary>
+        /// <param name="paths"></param>
+        /// <returns></returns>
+        public string DestCity(IList<IList<string>> paths)
+        {
+            var ans = string.Empty;
+            var dicTarget = new Dictionary<string, int>();
+            var dicSource = new Dictionary<string, int>();
+            foreach (var path in paths)
+            {
+                if (dicSource.ContainsKey(path[0]))
+                {
+                    dicSource[path[0]]++;
+                }
+                else
+                {
+                    dicSource.Add(path[0], 1);
+                }
+
+                if (dicTarget.ContainsKey(path[1]))
+                {
+                    dicTarget[path[1]]++;
+                }
+                else
+                {
+                    dicTarget.Add(path[1], 1);
+                }
+            }
+            foreach (var (k, v) in dicTarget)
+            {
+                if (v == 1 && !dicSource.ContainsKey(k))
+                {
+                    ans = k;
+                    break;
+                }
+            }
+            return ans;
+        }
+
+        /// <summary>
+        /// AC
+        /// B. 是否所有 1 都至少相隔 k 个元素
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public bool KLengthApart(int[] nums, int k)
+        {
+            var flg = false;
+            var tmp = 0;
+            foreach (var v in nums)
+            {
+                if (!flg)
+                {
+                    if (v == 1)
+                    {
+                        flg = true;
+                        tmp = 0;
+                    }
+                }
+                else
+                {
+                    if (v == 1)
+                    {
+                        if (tmp >= k)
+                        {
+                            tmp = 0;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else if (v == 0)
+                    {
+                        tmp++;
+                    }
+                }
+
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// AC
+        /// C. 绝对差不超过限制的最长连续子数组
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public int LongestSubarray(int[] nums, int limit)
+        {
+            var ans = 0;
+
+            var l = 0;
+            var min = nums[0];
+            var max = nums[0];
+            for (var i = 1; i < nums.Length; ++i)
+            {
+                max = Math.Max(max, nums[i]);
+                min = Math.Min(min, nums[i]);
+
+                if (max - min <= limit)
+                {
+                    ans = Math.Max(ans, i - l + 1);
+                }
+                else
+                {
+                    l = i;
+                    max = nums[i];
+                    min = nums[i];
+                    while (l > 0 && Math.Abs(nums[i] - nums[l]) <= limit)
+                    {
+                        max = Math.Max(max, nums[l]);
+                        min = Math.Min(min, nums[l]);
+                        --l;
+                    }
+                    ++l;
+                }
+            }
+
+            return ans;
+        }
+
+        /// <summary>
+        /// D. 有序矩阵中的第 k 个最小数组和
+        /// </summary>
+        /// <param name="mat"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public int KthSmallest(int[][] mat, int k)
+        {
+            var ans = 0;
+            // TODO
+            return ans;
+        }
+        #endregion
     }
 }
