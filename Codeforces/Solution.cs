@@ -629,5 +629,115 @@ namespace Codeforces
             }
         }
         #endregion
+
+        #region Testing Round 16 (Unrated)
+        /// <summary>
+        /// AC
+        /// A. A + B
+        /// </summary>
+        public void AplusB_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                //var n = int.Parse(Console.ReadLine());
+                var ans = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+                Console.WriteLine(ans[0] + ans[1]);
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// B. Square?
+        /// </summary>
+        public void Square_B()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                //var n = int.Parse(Console.ReadLine());
+                var arr1 = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                var arr2 = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                var a1 = arr1[0];
+                var b1 = arr1[1];
+                var a2 = arr2[0];
+                var b2 = arr2[1];
+                var l = a1 > b1 ? a1 : b1;
+                if (a1 != b1)
+                {
+                    if ((a2 == a1 && b2 + b1 == l) || a2 == b1 && b2 + a1 == l || b2 == a1 && a2 + b1 == l || b2 == b1 && a2 + a1 == l)
+                    {
+                        Console.WriteLine("YES");
+                        continue;
+                    }
+                }
+                Console.WriteLine("NO");
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// C. Skier
+        /// </summary>
+        public void Skier_C()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                //var n = int.Parse(Console.ReadLine());
+                var arr = Console.ReadLine();
+                var dic = new Dictionary<Test, bool>();
+                var sx = 0;
+                var sy = 0;
+                var tx = 0;
+                var ty = 0;
+                var ans = 0;
+                for (var i = 0; i < arr.Length; ++i)
+                {
+                    switch (arr[i])
+                    {
+                        case 'N':
+                            ++ty;
+                            break;
+                        case 'S':
+                            --ty;
+                            break;
+                        case 'W':
+                            --tx;
+                            break;
+                        case 'E':
+                            ++tx;
+                            break;
+                    }
+                    if (!dic.ContainsKey(new Test { sx = sx, sy = sy, tx = tx, ty = ty }))
+                    {
+                        dic.Add(new Test { sx = sx, sy = sy, tx = tx, ty = ty }, true);
+                        dic.Add(new Test { sx = tx, sy = ty, tx = sx, ty = sy }, true);
+                        ans += 5;
+                    }
+                    else
+                    {
+                        ans++;
+                    }
+                    sx = tx;
+                    sy = ty;
+                }
+                Console.WriteLine(ans);
+            }
+        }
+        public struct Test
+        {
+            public int sx;
+            public int sy;
+            public int tx;
+            public int ty;
+
+            public override int GetHashCode()
+            {
+                return (((((((sx.GetHashCode() * 17) + sy.GetHashCode()) * 17) * 17) + tx.GetHashCode()) * 17) + ty.GetHashCode()) & 0x7fffffff;
+            }
+        }
+        #endregion
     }
 }

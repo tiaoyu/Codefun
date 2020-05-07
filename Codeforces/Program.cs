@@ -9,38 +9,34 @@ namespace Codeforces
         static void Main(string[] args)
         {
             var s = new Solution();
-            s.Hilberts_Hotel_round_639_div2_C();
+            s.Square_B();
         }
     }
 
     public partial class Solution
     {
-        //public void Hilberts_Hotel_round_639_div2_C()
+        //public void Square()
         //{
         //    var t = int.Parse(Console.ReadLine());
         //    while (t-- > 0)
         //    {
-        //        var n = int.Parse(Console.ReadLine());
-        //        var arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
-        //        var set = new HashSet<int>();
-        //        var flg = false;
-        //        var tmp = new int[n];
-        //        for (var i = 0; i < n; ++i)
+        //        //var n = int.Parse(Console.ReadLine());
+        //        var arr1 = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        //        var arr2 = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        //        var a1 = arr1[0];
+        //        var b1 = arr1[1];
+        //        var a2 = arr2[0];
+        //        var b2 = arr2[1];
+        //        var l = a1 > b1 ? a1 : b1;
+        //        if (a1 != b1)
         //        {
-        //            tmp[((i + arr[i]) % n + n) % n]++;
-        //        } 
-        //        for (var i = 0; i < n; ++i)
-        //        {
-        //            if (tmp[i] >= 2)
+        //            if ((a2 == a1 && b2 + b1 == l )|| a2 == b1 && b2 + a1 == l || b2 == a1 && a2 + b1 == l || b2 == b1 && a2 + a1 == l)
         //            {
-        //                flg = true;
-        //                break;
+        //                Console.WriteLine("YES");
+        //                continue;
         //            }
         //        }
-        //        if (flg)
-        //            Console.WriteLine("NO");
-        //        else
-        //            Console.WriteLine("YES");
+        //        Console.WriteLine("NO");
         //    }
         //}
     }
