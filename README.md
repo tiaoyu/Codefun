@@ -62,7 +62,8 @@ capacity 初始化大小为 大于 3 / 0.72 的素数 = 5
 ### 动态规划
 ### 数学
 * 取石子问题
-*
+* [希尔伯特旅馆悖论(Hilbert's paradox of the Grand Hotel)](https://zhuanlan.zhihu.com/p/27078717)
+
 ## 4 网络
 
 ### TCP
@@ -84,3 +85,6 @@ capacity 初始化大小为 大于 3 / 0.72 的素数 = 5
 ### 消息队列
 ### 分布式缓存机制
 ### zookeeper应用
+
+## 7 其他
+### 协程
