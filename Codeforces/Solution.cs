@@ -564,9 +564,10 @@ namespace Codeforces
         }
 
         /// <summary>
-        /// B.
+        /// B. AC
+        /// Card Constructions
         /// </summary>
-        public void Card_Constructions_round_639_div2_A()
+        public void Card_Constructions_round_639_div2_B()
         {
             var a = new int[26000];
             for (var i = 1; i < 26000; ++i)
@@ -584,17 +585,10 @@ namespace Codeforces
                 var ans = 0;
                 for (var i = 25999; i >= 1; --i)
                 {
-
-                    if (n % a[i] == 0)
+                    if (n >= a[i])
                     {
-                        ans += (n / a[i]);
-                        break;
-                    }
-
-                    if (n % a[i] < n)
-                    {
-                        ++ans;
-                        n -= a[i];
+                        ans+= (n/a[i]);
+                        n %= a[i];
                     }
                 }
 
@@ -603,29 +597,30 @@ namespace Codeforces
         }
 
         /// <summary>
-        /// C.
+        /// AC
+        /// C. Hilbert's Hotel
         /// </summary>
-        public void Hilberts_Hotel_round_639_div2_A()
+        public void Hilberts_Hotel_round_639_div2_C()
         {
             var t = int.Parse(Console.ReadLine());
             while (t-- > 0)
             {
-                //var tmp = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
                 var n = int.Parse(Console.ReadLine());
                 var arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
                 var set = new HashSet<int>();
                 var flg = false;
+                var tmp = new int[n];
                 for (var i = 0; i < n; ++i)
                 {
-                    for (var j = i + 1; j < n; ++j)
+                    tmp[((i + arr[i]) % n + n) % n]++;
+                }
+                for (var i = 0; i < n; ++i)
+                {
+                    if (tmp[i] >= 2)
                     {
-                        if (Math.Abs(arr[i] - arr[j]) == (j - i))
-                        {
-                            flg = true;
-                            break;
-                        }
+                        flg = true;
+                        break;
                     }
-                    if (flg) break;
                 }
                 if (flg)
                     Console.WriteLine("NO");

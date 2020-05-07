@@ -9,33 +9,33 @@ namespace Codeforces
         static void Main(string[] args)
         {
             var s = new Solution();
-            s.Hilberts_Hotel_round_639_div2_A();
+            s.Hilberts_Hotel_round_639_div2_C();
         }
     }
 
     public partial class Solution
     {
-        //public void Hilberts_Hotel_round_639_div2_A()
+        //public void Hilberts_Hotel_round_639_div2_C()
         //{
         //    var t = int.Parse(Console.ReadLine());
         //    while (t-- > 0)
         //    {
-        //        //var tmp = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
         //        var n = int.Parse(Console.ReadLine());
         //        var arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
         //        var set = new HashSet<int>();
         //        var flg = false;
+        //        var tmp = new int[n];
         //        for (var i = 0; i < n; ++i)
         //        {
-        //            for (var j = i + 1; j < n; ++j)
+        //            tmp[((i + arr[i]) % n + n) % n]++;
+        //        } 
+        //        for (var i = 0; i < n; ++i)
+        //        {
+        //            if (tmp[i] >= 2)
         //            {
-        //                if (Math.Abs(arr[i] - arr[j]) == (j - i))
-        //                {
-        //                    flg = true;
-        //                    break;
-        //                }
+        //                flg = true;
+        //                break;
         //            }
-        //            if (flg) break;
         //        }
         //        if (flg)
         //            Console.WriteLine("NO");
