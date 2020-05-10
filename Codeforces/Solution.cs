@@ -587,7 +587,7 @@ namespace Codeforces
                 {
                     if (n >= a[i])
                     {
-                        ans+= (n/a[i]);
+                        ans += (n / a[i]);
                         n %= a[i];
                     }
                 }
@@ -738,6 +738,256 @@ namespace Codeforces
                 return (((((((sx.GetHashCode() * 17) + sy.GetHashCode()) * 17) * 17) + tx.GetHashCode()) * 17) + ty.GetHashCode()) & 0x7fffffff;
             }
         }
+        #endregion
+
+        #region round 640 div4
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void SumofRoundNumbers_round_640_div4()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var list = new List<long>();
+                var n = long.Parse(Console.ReadLine());
+                var tmp = 1L;
+                while (n > 0)
+                {
+                    if (n % 10 == 0)
+                    {
+                        n /= 10;
+                        tmp *= 10;
+                        continue;
+                    }
+
+                    list.Add((n % 10) * tmp);
+                    n /= 10;
+                    tmp *= 10;
+                }
+
+                Console.WriteLine(list.Count);
+                Console.Write(list[0]);
+                for (var i = 1; i < list.Count; ++i)
+                    Console.Write(" " + list[i]);
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void SameParitySummands_round_640_div4()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr1 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = arr1[0];
+                var k = arr1[1];
+                if (k > n)
+                {
+                    Console.WriteLine("NO");
+                    continue;
+                }
+
+                if (k == n)
+                {
+                    Console.WriteLine("YES");
+                    Console.Write(1);
+                    for (var i = 0; i < k - 1; ++i)
+                    {
+                        Console.Write(" " + 1);
+                    }
+                    Console.WriteLine();
+                    continue;
+                }
+
+                var tmp1 = n - (k - 1);
+
+                if ((tmp1 & 1) == 1)
+                {
+                    Console.WriteLine("YES");
+                    Console.Write(tmp1);
+                    for (var i = 0; i < k - 1; ++i)
+                    {
+                        Console.Write(" " + 1);
+                    }
+                    Console.WriteLine();
+                    continue;
+                }
+
+
+                var tmp2 = n - ((k - 1) * 2);
+                if (tmp2 <= 0)
+                {
+                    Console.WriteLine("NO");
+                    continue;
+                }
+                if ((tmp2 & 1) == 0)
+                {
+                    Console.WriteLine("YES");
+                    Console.Write(tmp2);
+                    for (var i = 0; i < k - 1; ++i)
+                    {
+                        Console.Write(" " + 2);
+                    }
+                    Console.WriteLine();
+                    continue;
+                }
+                Console.WriteLine("NO");
+
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void K_thNotDivisiblebyn_round_640_div4()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr1 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = arr1[0];
+                var k = arr1[1];
+
+                if (n > k)
+                {
+                    Console.WriteLine(k);
+                }
+                else if (n == k)
+                {
+                    Console.WriteLine(n + 1);
+                }
+                else
+                {
+                    var res = k / (n - 1);
+
+                    var count = res * (n - 1);
+                    var remain = k - count;
+                    if (remain == 0)
+                    {
+                        Console.WriteLine(res * n - 1);
+                    }
+                    else
+                    {
+                        Console.WriteLine(res * n + remain);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void AliceBobandCandies_round_640_div4()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                var arr1 = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                var l = 0;
+                var r = arr1.Length - 1;
+                var flg = true;
+                var a = 0;
+                var b = 0;
+                var eatA = 0;
+                var eatB = 0;
+                var prev = 0;
+                while (l <= r)
+                {
+                    if (flg)
+                    {
+                        var sum = 0;
+                        for (var i = l; i <= r; ++i)
+                        {
+                            sum += arr1[i];
+                            if (sum > prev)
+                            {
+                                prev = sum;
+                                flg = false;
+                                a++;
+                                l = i + 1;
+                                eatA += sum;
+                                break;
+                            }
+                        }
+                        if (flg)
+                        {
+                            a++;
+                            l = r;
+                            eatA += sum;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        var sum = 0;
+                        for (var i = r; i >= l; --i)
+                        {
+                            sum += arr1[i];
+                            if (sum > prev)
+                            {
+                                prev = sum;
+                                flg = true;
+                                b++;
+                                r = i - 1;
+                                eatB += sum;
+                                break;
+                            }
+                        }
+                        if (!flg)
+                        {
+                            b++;
+                            r = l;
+                            eatB += sum;
+                            break;
+                        }
+                    }
+                }
+
+                Console.WriteLine(a + b + " " + eatA + " " + eatB);
+            }
+        }
+
+        /// <summary>
+        /// MLE
+        /// </summary>
+        public void SpecialElements_round_640_div4()
+        {
+            var t = int.Parse(Console.ReadLine());
+            var set = new HashSet<int>();
+            while (t-- > 0)
+            {
+                set.Clear();
+                var n = int.Parse(Console.ReadLine());
+                var arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+                for (var i = 0; i < n; ++i)
+                {
+                    var sum = arr[i];
+                    for (var j = i + 1; j < n; ++j)
+                    {
+                        sum += arr[j];
+                        set.Add(sum);
+                    }
+                }
+
+                var ans = 0;
+                for (var i = 0; i < n; ++i)
+                {
+                    if (set.Contains(arr[i]))
+                    {
+                        ++ans;
+                    }
+                }
+                Console.WriteLine(ans);
+            }
+        }
+
         #endregion
     }
 }

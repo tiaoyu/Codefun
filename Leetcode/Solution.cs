@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Leetcode
 {
-    public class Solution
+    public partial class Solution
     {
         public void NextPermutation(int[] nums)
         {
@@ -241,7 +241,7 @@ namespace Leetcode
             return res;
         }
 
-        #region leetcode 第 185 场周赛
+        #region contest 185 
         /// <summary>
         /// AC
         /// </summary>
@@ -679,6 +679,37 @@ namespace Leetcode
         {
             var ans = 0;
             // TODO
+            return ans;
+        }
+        #endregion
+
+        #region lettcode contest 188
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public IList<string> BuildArray_A(int[] target, int n)
+        {
+            var ans = new List<string>();
+            var p = 0;
+            for (var i = 1; ; ++i)
+            {
+                if (p >= target.Length)
+                    break;
+                if (target[p] == i)
+                {
+                    ans.Add("Push");
+                    ++p;
+                }
+                else
+                {
+                    ans.Add("Push");
+                    ans.Add("Pop");
+                }
+            }
             return ans;
         }
         #endregion
