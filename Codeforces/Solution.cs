@@ -989,5 +989,241 @@ namespace Codeforces
         }
 
         #endregion
+
+        #region round 641 div2
+        /// <summary>
+        /// AC
+        /// Orac and Factors
+        /// </summary>
+        public void OracandFactors_div2_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr1 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = arr1[0];
+                var k = arr1[1];
+
+                var res = (long)Math.Sqrt(n);
+                var i = 2L;
+                for (i = 2; i <= res; ++i)
+                {
+                    if (n % i == 0)
+                        break;
+                }
+
+                if (i > res)
+                    Console.WriteLine(n + n + 2 * (k - 1));
+                else
+                    Console.WriteLine(n + i + 2 * (k - 1));
+            }
+        }
+
+        #endregion
+
+        #region round 642 div3
+        /// <summary>
+        /// AC
+        /// Most Unstable Array
+        /// </summary>
+        public void MostUnstableArray_div3_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr1 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = arr1[0];
+                var m = arr1[1];
+                if (n == 1)
+                    Console.WriteLine(0);
+                else if (n == 2)
+                    Console.WriteLine(m);
+                else
+                {
+                    Console.WriteLine(2 * m);
+                }
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// Two Arrays And Swaps
+        /// </summary>
+        public void TwoArraysAndSwaps_div3_B()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var arr1 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var arr2 = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+                var n = arr[0];
+                var k = arr[1];
+
+                Array.Sort(arr1);
+                Array.Sort(arr2);
+
+                for (var i = 0; i < k; ++i)
+                {
+                    if (arr1[i] < arr2[n - i - 1])
+                    {
+                        arr1[i] = arr2[n - i - 1];
+                    }
+                }
+                var sum = 0L;
+                for (var i = 0; i < n; ++i)
+                {
+                    sum += arr1[i];
+                }
+                Console.WriteLine(sum);
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// Board Moves
+        /// </summary>
+        public void Board_Moves_div3_C()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var n = long.Parse(Console.ReadLine());
+
+                if (n == 1)
+                    Console.WriteLine(0);
+                else
+                {
+                    var sum = 0L;
+                    for (var i = 3L; i <= n; i += 2L)
+                        sum += (i >> 1) * (i * 2 + (i - 2) * 2);
+                    Console.WriteLine(sum);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// Constructing the Array
+        /// </summary>
+        public void Constructing_the_Array_div3_D()
+        {
+            var t = int.Parse(Console.ReadLine());
+            //var queue = new SortedList<Test1, Test1>(new TestComparer());
+            var queue = new SortedSet<Test1>(new TestComparer());
+            while (t-- > 0)
+            {
+                queue.Clear();
+                var k = 0L;
+                var n = long.Parse(Console.ReadLine());
+
+                var ans = new long[n];
+
+                var l = 0L;
+                var r = n - 1;
+                queue.Add(new Test1 { l = l, r = r });
+                while (queue.Count > 0)
+                {
+                    var tmp = queue.ElementAt(0);
+                    queue.Remove(tmp);
+                    if (tmp.l > tmp.r)
+                        continue;
+                    var mid = (tmp.l + tmp.r) >> 1;
+                    if (ans[mid] != 0)
+                        continue;
+                    ans[mid] = ++k;
+
+                    if (tmp.l == tmp.r)
+                        continue;
+
+                    if (((tmp.r - tmp.l + 1) & 1) == 1)
+                    {
+
+                        queue.Add(new Test1 { l = tmp.l, r = mid - 1 });
+                        queue.Add(new Test1 { l = mid + 1, r = tmp.r });
+                    }
+                    else
+                    {
+                        queue.Add(new Test1 { l = mid + 1, r = tmp.r });
+                        queue.Add(new Test1 { l = tmp.l, r = mid - 1 });
+                    }
+
+                }
+
+                Console.Write(ans[0]);
+                for (var i = 1; i < n; ++i)
+                {
+                    Console.Write(" " + ans[i]);
+                }
+                Console.WriteLine();
+            }
+        }
+        public class TestComparer : IComparer<Test1>
+        {
+            public int Compare(Test1 v1, Test1 v2)
+            {
+                if (v1.r - v1.l == v2.r - v2.l)
+                {
+                    return (int)(v1.l - v2.l);
+                }
+                else
+                {
+                    return (int)(v2.r - v2.l - v1.r + v1.l);
+                }
+            }
+        }
+        public struct Test1
+        {
+            public long l;
+            public long r;
+
+            public override int GetHashCode()
+            {
+                return $"{l} {r}".GetHashCode();
+            }
+        }
+
+        //public void div3_E()
+        //{
+        //    var t = int.Parse(Console.ReadLine());
+        //    while (t-- > 0)
+        //    {
+        //        var arr = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+        //        var arr1 = Console.ReadLine();
+        //        var n = arr[0];
+        //        var k = arr[1];
+
+        //        var flg = false;
+        //        var val = 0;
+        //        var ans = 0;
+        //        for (var i = 0; i < n; ++i)
+        //        {
+        //            if (flg)
+        //            {
+        //                if ((i - val) % k == 0)
+        //                {
+        //                    if (arr1[i] != '1')
+        //                        ans++;
+        //                }
+        //                else
+        //                {
+        //                    if (arr1[i] != '0')
+        //                        ans++;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (arr1[i] == '1')
+        //                {
+        //                    flg = true;
+        //                    val = i;
+        //                }
+        //            }
+        //        }
+        //        Console.WriteLine(ans);
+        //    }
+        //}
+        #endregion
     }
 }

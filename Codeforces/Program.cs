@@ -15,6 +15,7 @@ namespace Codeforces
 
     public partial class Solution
     {
+
     }
 }
 
