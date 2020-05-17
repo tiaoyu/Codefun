@@ -713,5 +713,93 @@ namespace Leetcode
             return ans;
         }
         #endregion
+
+        #region leetcode contest 189
+        /// <summary>
+        /// AC
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="queryTime"></param>
+        /// <returns></returns>
+        public int BusyStudent_189_A(int[] startTime, int[] endTime, int queryTime)
+        {
+            var ans = 0;
+            for (var i = 0; i < startTime.Length; ++i)
+            {
+                if (queryTime >= startTime[i] && queryTime <= endTime[i])
+                    ans++;
+            }
+            return ans;
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public string ArrangeWords_189_B(string text)
+        {
+            var strs = text.Split(' ');
+
+            for (var i = 0; i < strs.Length; ++i)
+            {
+                strs[i] = strs[i].ToLower();
+                for (var j = 1; j < strs.Length; ++j)
+                {
+                    if (strs[j - 1].Length > strs[j].Length)
+                    {
+                        var tmp = strs[j];
+                        strs[j] = strs[j - 1];
+                        strs[j - 1] = tmp;
+                    }
+                }
+            }
+            var ans = strs[0];
+            for (var i = 0; i < strs.Length; ++i)
+            {
+                ans = $"{ans} {strs[i]}";
+            }
+            ans = ans.Substring(0, 1).ToUpper() + ans.Substring(1);
+            return ans;
+        }
+
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        /// <param name="favoriteCompanies"></param>
+        /// <returns></returns>
+        public IList<int> PeopleIndexes_189_C(IList<IList<string>> favoriteCompanies)
+        {
+            var dic = new Dictionary<int, HashSet<string>>();
+
+            var inx = -1;
+            foreach (var s in favoriteCompanies)
+            {
+                dic.Add(++inx, new HashSet<string>());
+                foreach (var i in s)
+                {
+                    dic[inx].Add(i);
+                }
+            }
+            var ans = new List<int>();
+            for (var i = 0; i < dic.Count; ++i)
+            {
+                var flg = false;
+                for (var j = 0; j < dic.Count; ++j)
+                {
+                    if (i != j && dic[j].IsProperSupersetOf(dic[i]))
+                    {
+                        flg = true;
+                        break;
+                    }
+                }
+                if (!flg)
+                    ans.Add(i);
+            }
+            return ans;
+        }
+        #endregion
     }
 }

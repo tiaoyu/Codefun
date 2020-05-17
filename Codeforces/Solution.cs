@@ -1019,6 +1019,58 @@ namespace Codeforces
             }
         }
 
+        public void div2_B()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+                var ans = 1;
+                var tmp = new int[n + 1];
+                for (var i = 0; i <= n; ++i)
+                    tmp[i] = 1;
+                for (var i = 1; i <= n; ++i)
+                {
+                    for (var j = i * 2; j <= n; j += i)
+                    {
+                        if (arr[j - 1] > arr[i - 1])
+                        {
+                            tmp[j] = Math.Max(tmp[j], tmp[i] + 1);
+                            ans = Math.Max(ans, tmp[j]);
+                        }
+                    }
+                }
+                Console.WriteLine(ans);
+            }
+
+        }
+
+        public void div2_C()
+        {
+            var n = int.Parse(Console.ReadLine());
+            var arr = Utilities.GetIntArray(Console.ReadLine());
+            var tmp = new List<int>();
+            var minTmp = int.MaxValue;
+            for (var i = 0; i < n; ++i)
+            {
+                for (var j = i + 1; j < n; ++j)
+                {
+                    var t = Utilities.LCM_int(arr[i], arr[j]);
+                    tmp.Add(t);
+                    minTmp = Math.Min(minTmp, t);
+                }
+            }
+            var ans = tmp[0];
+            for (var i = 1; i < tmp.Count; ++i)
+            {
+                ans = Utilities.GCD_int(ans, tmp[i]);
+                if (ans == 1)
+                    break;
+            }
+            Console.WriteLine(ans);
+        }
+
         #endregion
 
         #region round 642 div3
