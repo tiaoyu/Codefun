@@ -1019,7 +1019,7 @@ namespace Codeforces
             }
         }
 
-        public void div2_B()
+        public void OracandModels_div2_B()
         {
             var t = int.Parse(Console.ReadLine());
             while (t-- > 0)
@@ -1046,7 +1046,7 @@ namespace Codeforces
 
         }
 
-        public void div2_C()
+        public void OracandLCM_div2_C()
         {
             var n = int.Parse(Console.ReadLine());
             var arr = Utilities.GetIntArray(Console.ReadLine());
@@ -1276,6 +1276,297 @@ namespace Codeforces
         //        Console.WriteLine(ans);
         //    }
         //}
+        #endregion
+
+        #region round 643 div2
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void SequencewithDigits_div2_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+                var a1 = arr[0];
+                var k = arr[1];
+
+
+                while (--k > 0)
+                {
+                    var min = long.MaxValue;
+                    var max = long.MinValue;
+                    var tmp = a1;
+                    while (a1 > 0)
+                    {
+                        if (a1 % 10 == 0)
+                        {
+                            min = 0;
+                            break;
+                        }
+                        min = Math.Min(min, a1 % 10);
+                        max = Math.Max(max, a1 % 10);
+                        a1 /= 10;
+                    }
+                    a1 = tmp + min * max;
+                    if (a1 == tmp)
+                        break;
+                }
+
+                Console.WriteLine(a1);
+            }
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public void YoungExplorers_div2_B()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var n = long.Parse(Console.ReadLine());
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+                Array.Sort(arr);
+
+                var ans = 0;
+                var cur = 0;
+                for (var i = 0; i < n; ++i)
+                {
+                    if (++cur >= arr[i])
+                    {
+                        ans++;
+                        cur = 0;
+                    }
+                }
+                Console.WriteLine(ans);
+            }
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public void CountTriangles_div_C()
+        {
+            var arr = Utilities.GetLongArray(Console.ReadLine());
+            var a = arr[0];
+            var b = arr[1];
+            var c = arr[2];
+            var d = arr[3];
+
+            var ans = 0L;
+
+            if (a + b > d)
+                ans = (b - a + 1) * (c - b + 1) * (d - c + 1);
+            else
+                for (var z = d; z >= c; --z)
+                {
+                    if (a + b > z)
+                    {
+                        ans += (b - a + 1) * (c - b + 1) * (z - c + 1);
+                        break;
+                    }
+                    for (var x = a; x <= b; ++x)
+                    {
+                        if (x + b > z)
+                        {
+                            ans += (b - x + 1) * (c - b + 1);
+                            break;
+                        }
+                        for (var y = b; y <= c; ++y)
+                        {
+                            if (x + y > z)
+                                ++ans;
+                        }
+                    }
+                }
+            Console.WriteLine(ans);
+        }
+
+        #endregion
+
+        #region edu round 87
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void AlarmClock_round_87_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+
+                var a = arr[0];
+                var b = arr[1];
+                var c = arr[2];
+                var d = arr[3];
+
+                if (a <= b)
+                    Console.WriteLine(b);
+                else if (c <= d)
+                    Console.WriteLine(-1);
+                else
+                    Console.WriteLine(b + ((a - b + (c - d - 1)) / (c - d)) * c);
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void TernaryString_round_87_B()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr = Console.ReadLine();
+                var indx1 = -1;
+                var indx2 = -1;
+                var indx3 = -1;
+                var ans = int.MaxValue;
+                for (var i = 0; i < arr.Length; ++i)
+                {
+                    if (indx1 >= 0 && indx2 >= 0 && indx3 >= 0)
+                    {
+                        var min = Math.Min(Math.Min(indx1, indx2), indx3);
+                        var max = Math.Max(Math.Max(indx1, indx2), indx3);
+                        ans = Math.Min(ans, max - min + 1);
+
+                        if (i - max > max - min || max - min == 2)
+                            break;
+
+                        if (arr[i] == '1')
+                        {
+                            indx1 = i;
+                        }
+                        else if (arr[i] == '2')
+                        {
+                            indx2 = i;
+                        }
+                        else if (arr[i] == '3')
+                        {
+                            indx3 = i;
+                        }
+                    }
+                    else
+                    {
+                        if (arr[i] == '1')
+                        {
+                            indx1 = i;
+                        }
+                        else if (arr[i] == '2')
+                        {
+                            indx2 = i;
+                        }
+                        else if (arr[i] == '3')
+                        {
+                            indx3 = i;
+                        }
+                    }
+
+                    if (indx1 >= 0 && indx2 >= 0 && indx3 >= 0)
+                    {
+                        var min = Math.Min(Math.Min(indx1, indx2), indx3);
+                        var max = Math.Max(Math.Max(indx1, indx2), indx3);
+                        ans = Math.Min(ans, max - min + 1);
+                    }
+                }
+                Console.WriteLine(ans == int.MaxValue ? 0 : ans);
+            }
+        }
+
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void SimplePolygonEmbedding_round_87_C1()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                //var arr = Utilities.GetLongArray(Console.ReadLine());
+                var n = int.Parse(Console.ReadLine());
+                var ans = 1.0D / 2.0D;
+                for (var i = 1; i <= n * 2 / 4 - 1; ++i)
+                {
+                    ans += Math.Cos(2 * Math.PI / (2 * n) * i);
+                }
+                Console.WriteLine(Math.Round(ans * 2.0D, 9));
+            }
+        }
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void NotSoSimplePolygonEmbedding_round_87_C2()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                var ans = 1.0D / 2.0D;
+                for (var i = 1; i <= n * 2 / 4; ++i)
+                {
+                    ans += Math.Cos(2 * Math.PI / (2 * n) * i);
+                }
+                // half of inside angle
+                ans = (ans * 2) * Math.Cos(Math.PI / (2 * n) / 2);
+                Console.WriteLine(Math.Round(ans, 9));
+            }
+        }
+
+        /// <summary>
+        /// MLE
+        /// </summary>
+        public void Multiset_round_87_D()
+        {
+            var args = Utilities.GetIntArray(Console.ReadLine());
+            var arrs = Utilities.GetIntArray(Console.ReadLine());
+            var queries = Utilities.GetIntArray(Console.ReadLine());
+
+            var n = args[0];
+            var q = args[1];
+            var tmp = n;
+            Array.Sort(arrs);
+
+            foreach (var query in queries)
+            {
+                if (query < 0)
+                {
+                    for (var i = -query - 1; i < n - 1; ++i)
+                    {
+                        arrs[i] = arrs[i + 1];
+                    }
+                    --n;
+                }
+                else
+                {
+                    for (var i = 0; i < n; ++i)
+                    {
+
+                        if (arrs[i] >= query)
+                        {
+                            if (n >= tmp)
+                            {
+                                Array.Resize(ref arrs, n + 1);
+                            }
+                            for (var j = n - 1; j >= i; --j)
+                                arrs[j + 1] = arrs[j];
+                            arrs[i] = query;
+                            if (n >= tmp)
+                            {
+                                tmp = n + 1;
+                                n = n + 1;
+                            }
+                            else
+                            {
+                                ++n;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine(n > 0 ? arrs[0] : 0);
+        }
         #endregion
     }
 }
