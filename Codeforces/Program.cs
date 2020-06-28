@@ -10,12 +10,12 @@ namespace Codeforces
         static void Main(string[] args)
         {
             var s = new Solution();
+            s.Buying_Shovels_D();
         }
     }
 
     public partial class Solution
     {
-
     }
 
     public class Utilities
@@ -50,7 +50,27 @@ namespace Codeforces
             return (a * b) / GCD_long(a, b);
         }
 
+        public static bool IsPrime(long a)
+        {
+            var t = (long)Math.Sqrt(a);
+            for (var i = 2; i <= t; ++i)
+            {
+                if (a % i == 0)
+                    return false;
+            }
+            return true;
+        }
 
+        public static bool IsPrime(int a)
+        {
+            var t = (int)Math.Sqrt(a);
+            for (var i = 2; i <= t; ++i)
+            {
+                if (a % i == 0)
+                    return true;
+            }
+            return false;
+        }
     }
 }
 
