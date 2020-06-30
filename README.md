@@ -56,10 +56,13 @@ capacity 初始化大小为 大于 3 / 0.72 的素数 = 5
 ### 四叉树
 
 ## 3 算法
-
 ### 贪心
 ### 字典序
 ### 动态规划
+### 单调栈
+经典题
+链接：https://leetcode-cn.com/problems/trapping-rain-water
+
 ### 数学
 * 取石子问题
 * [希尔伯特旅馆悖论(Hilbert's paradox of the Grand Hotel)](https://zhuanlan.zhihu.com/p/27078717)
