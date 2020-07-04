@@ -60,13 +60,28 @@ capacity 初始化大小为 大于 3 / 0.72 的素数 = 5
 ### 字典序
 ### 动态规划
 ### 单调栈
-经典题
+
 链接：https://leetcode-cn.com/problems/trapping-rain-water
 
 ### 数学
 * 取石子问题
 * [希尔伯特旅馆悖论(Hilbert's paradox of the Grand Hotel)](https://zhuanlan.zhihu.com/p/27078717)
-
+#### 矩阵
+* 矩阵旋转变换
+$$
+\left[
+\begin{matrix}
+    cos\theta & -sin\theta \\
+    sin\theta & cos\theta
+\end{matrix}
+\right] *
+\left[
+\begin{matrix}
+    x \\
+    y
+\end{matrix}
+\right]
+$$
 ## 4 网络
 
 ### TCP

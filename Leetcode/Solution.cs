@@ -1111,5 +1111,142 @@ namespace Leetcode
             }
             return res;
         }
+
+        /// <summary>
+        /// 全排列
+        /// 给定一个 没有重复 数字的序列，返回其所有可能的全排列。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public IList<IList<int>> Permute(int[] nums)
+        {
+            var res = new List<List<int>>();
+            res.Add(new List<int>(nums));
+
+            // 计算下一个全排列数列
+            void GetNextPermute(int[] nums)
+            {
+                var flg = false;
+                // 从后往前遍历 寻找第一个打破单调增的数
+                // 将单调增数列中最小的且大于当前数的数  与 其交换位置
+                // 然后将其后数列逆序为单调减 即为下一个全排列数列
+                // 若当前数列已经是最大的全排列数列 则整体逆序为解
+                for (var i = nums.Length - 2; i >= 0; --i)
+                {
+                    if (nums[i] < nums[i + 1])
+                    {
+                        flg = true;
+                        var inx = nums.Length - 1;
+                        for (var j = i + 1; j < nums.Length; ++j)
+                        {
+                            if (nums[j] < nums[i])
+                            {
+                                inx = j - 1;
+                                break;
+                            }
+                        }
+                        var tmp = nums[i];
+                        nums[i] = nums[inx];
+                        nums[inx] = tmp;
+                        if (i + 1 < nums.Length - 1)
+                            Array.Reverse(nums, i + 1, nums.Length - i - 1);
+                        break;
+                    }
+                }
+                if (!flg)
+                {
+                    Array.Reverse(nums);
+                }
+            }
+            // 计算阶乘
+            int fun(int len)
+            {
+                if (len == 1) return 1;
+                return len * fun(len - 1);
+            }
+
+            for (var i = 1; i < fun(nums.Length); ++i)
+            {
+                GetNextPermute(nums);
+                res.Add(new List<int>(nums));
+            }
+
+            return res.ToArray();
+        }
+
+        /// <summary>
+        /// 旋转图像
+        /// 给定一个 n × n 的二维矩阵表示一个图像。
+        /// 将图像顺时针旋转 90 度。
+        /// 说明：
+        /// 你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/rotate-image
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="matrix"></param>
+        public void Rotate(int[][] matrix)
+        {
+            var list = new List<List<int>>();
+            for (var i = 0; i < matrix.Length; ++i)
+            {
+                list.Add(new List<int>());
+                for (var j = matrix[i].Length - 1; j >= 0; --j)
+                {
+                    list[i].Add(matrix[j][i]);
+                }
+            }
+
+            for (var i = 0; i < matrix.Length; ++i)
+            {
+                for (var j = 0; j < matrix.Length; ++j)
+                {
+                    matrix[i][j] = list[i][j];
+                }
+            }
+        }
+
+        /// <summary>
+        /// 编辑距离
+        /// 给你两个单词 word1 和 word2，请你计算出将 word1转换成 word2 所使用的最少操作数 。
+        /// 你可以对一个单词进行如下三种操作：
+        ///     1. 插入一个字符
+        ///     2. 删除一个字符
+        ///     3. 替换一个字符
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/edit-distance
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="word1"></param>
+        /// <param name="word2"></param>
+        /// <returns></returns>
+        public int MinDistance(string word1, string word2)
+        {
+            // dp[i,j] => word1 前i位 转为 word2 前j位 需要的操作数
+            // 初始化，默认前0为 转为 前 i 位 需要 i个操作
+            //    dp[i,0] => { 0, 1, 2, 3 .. i}
+            //    dp[0,j] => { 0, 1, 2, 3 .. j} 
+            // 状态转移，
+            //    dp[i,j] = min(dp[i-1,j-1],dp[i,j-1],dp[i-1,j]) + 1; (word1[i] == word2[j])
+            //    dp[i,j] = dp[i-1,j-1];
+            var dp = new int[word1.Length + 1, word2.Length + 1];
+            for (var i = 0; i < word1.Length + 1; ++i)
+                dp[i, 0] = i;
+            for (var i = 0; i < word2.Length + 1; ++i)
+                dp[0, i] = i;
+
+            for (var i = 0; i < word2.Length; ++i)
+            {
+                for (var j = 0; j < word1.Length; ++j)
+                {
+                    if (word1[j] == word2[i])
+                        dp[j + 1, i + 1] = dp[j, i];
+                    else
+                        dp[j + 1, i + 1] = Math.Min(Math.Min(dp[j, i], dp[j + 1, i]), dp[j, i + 1]) + 1;
+
+                }
+            }
+            return dp[word1.Length, word2.Length];
+        }
     }
 }
