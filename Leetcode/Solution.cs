@@ -1248,5 +1248,90 @@ namespace Leetcode
             }
             return dp[word1.Length, word2.Length];
         }
+
+        /// <summary>
+        /// 字母异位词分组  
+        /// 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+        /// 说明：
+        /// 所有输入均为小写字母。不考虑答案输出的顺序。
+        /// </summary>
+        /// <param name="strs"></param>
+        /// <returns></returns>
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            var dic = new Dictionary<string, List<string>>();
+
+            foreach (var str in strs)
+            {
+                var tmp = str.ToCharArray();
+                Array.Sort(tmp);
+                var tmpStr = new string(tmp);
+                if (!dic.TryGetValue(tmpStr, out var list))
+                    dic.Add(tmpStr, new List<string>());
+                dic[tmpStr].Add(str);
+            }
+
+            var res = new List<List<string>>();
+            foreach (var (_, v) in dic)
+            {
+                res.Add(v);
+            }
+
+            return res.ToArray();
+        }
+
+        /// <summary>
+        /// 最大子序和
+        /// 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+        /// 进阶:
+        ///    如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int MaxSubArray(int[] nums)
+        {
+            if (nums == null || nums.Length <= 0)
+                return 0;
+
+            var max = nums[0];
+            var front = nums[0];
+            for (var i = 1; i < nums.Length; ++i)
+            {
+                front = Math.Max(nums[i], front + nums[i]);
+                max = Math.Max(max, front);
+            }
+
+            return max;
+        }
+
+        /// <summary>
+        /// 跳跃游戏
+        /// 给定一个非负整数数组，你最初位于数组的第一个位置。
+        /// 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+        /// 判断你是否能够到达最后一个位置。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public bool CanJump(int[] nums)
+        {
+            if (nums.Length <= 0) return false;
+            if (nums.Length == 1) return true;
+            if (nums[0] == 0) return false;
+            var flg = true;
+            for (var i = nums.Length - 1 - 1; i >= 0; --i)
+            {
+                if (nums[i] != 0) continue;
+                for (var j = i - 1; j >= 0; --j)
+                {
+                    if (nums[j] >= (i - j + 1))
+                        break;
+                    if (j == 0)
+                        flg = false;
+                }
+                if (flg == false)
+                    break;
+            }
+            return flg;
+        }
     }
 }

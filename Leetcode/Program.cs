@@ -9,19 +9,15 @@ namespace Leetcode
         static void Main(string[] args)
         {
             Solution solution = new Solution();
-            //var str1 = "intention";
-            //var str2 = "execution";
-            //var str1 = "horse";
-            //var str2 = "rorse";
-            //var str1 = "horse";
-            //var str2 = "ros";
-            var str1 = "zoologicoarchaeologist";
-            var str2 = "zoogeologist";
-            Console.WriteLine(solution.MinDistance(str1, str2));
+            var str = new string[] { "eat", "tea", "tan", "ate", "nat", "bat", "aabbcc", "abc", "aabc" };
+            //var inte = new int[] { 2, 3, 1, 1, 4 };
+            var inte = new int[] { 3, 2, 1, 0, 4 };
+            Console.WriteLine(solution.CanJump(inte));
         }
     }
 
     public partial class Solution
     {
+
     }
 }
