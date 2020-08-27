@@ -801,5 +801,537 @@ namespace Leetcode
             return ans;
         }
         #endregion
+
+        /// <summary>
+        /// 最长有效括号
+        /// 给定一个只包含 '(' 和 ')' 的字符串，找出最长的包含有效括号的子串的长度。
+        /// </summary>
+        public int LongestValidParentheses(string s)
+        {
+            var set = new HashSet<V>();
+            var res = 0;
+            var tmp = 0;
+            var stack = new Stack<int>();
+            for (var i = 0; i < s.Length; ++i)
+            {
+                if (s[i] == '(')
+                {
+                    stack.Push(i + 1);
+                }
+                else if (s[i] == ')')
+                {
+                    if (stack.Count <= 0)
+                        continue;
+                    var peek = stack.Peek();
+                    if (peek > 0)
+                    {
+                        stack.Pop();
+                        var vTmp = new V { i = peek, j = i + 1 };
+                        var rmList = new List<V>();
+                        foreach (var v in set)
+                        {
+                            if (vTmp.j + 1 == v.i)
+                            {
+                                rmList.Add(v);
+                                vTmp.j = v.j;
+                            }
+                            else if (vTmp.i + 1 == v.i && vTmp.j - 1 == v.j)
+                            {
+                                rmList.Add(v);
+                            }
+                            else if (vTmp.i - 1 == v.j)
+                            {
+                                rmList.Add(v);
+                                vTmp.i = v.i;
+                            }
+                        }
+                        foreach (var l in rmList)
+                        {
+                            set.Remove(l);
+                        }
+                        set.Add(vTmp);
+                    }
+                    else
+                    {
+                        stack.Push(-(i + 1));
+                    }
+                }
+            }
+            foreach (var v in set)
+            {
+                res = Math.Max(res, v.j - v.i + 1);
+            }
+
+            return res;
+        }
+        public struct V
+        {
+            public int i;
+            public int j;
+        }
+
+        /// <summary>
+        /// 搜索旋转排序数组
+        /// 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+        /// (例如，数组[0, 1, 2, 4, 5, 6, 7] 可能变为[4, 5, 6, 7, 0, 1, 2] )。
+        /// 搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。
+        /// 你可以假设数组中不存在重复的元素。
+        /// 你的算法时间复杂度必须是 O(log n) 级别。
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/search-in-rotated-sorted-array
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public int Search(int[] nums, int target)
+        {
+            if (nums.Length <= 0) return -1;
+            // 二分法
+            var res = -1;
+            var l = 0;
+            var r = nums.Length - 1;
+            var mid = (l + r) >> 1;
+            while (target != nums[mid])
+            {
+                if (l == r) break;
+                // 4561 >2< 3 
+                if (nums[mid] <= nums[l] && nums[mid] <= nums[r])
+                {
+                    if (target > nums[mid])
+                    {
+                        if (target <= nums[r])
+                            l = mid + 1;
+                        else
+                            r = mid;
+                    }
+                    else
+                    {
+                        r = mid;
+                    }
+                }
+                // 4 >5< 6123
+                else if (nums[mid] >= nums[l] && nums[mid] >= nums[r])
+                {
+                    if (target > nums[mid])
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        if (target < nums[l])
+                            l = mid + 1;
+                        else
+                            r = mid;
+                    }
+                }
+                else
+                {
+                    if (target > nums[mid])
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        r = mid;
+                    }
+                }
+                mid = (l + r) >> 1;
+            }
+            if (target == nums[mid])
+                res = mid;
+            return res;
+        }
+
+        /// <summary>
+        /// 在排序数组中查找元素的第一个和最后一个位置
+        /// 给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
+        /// 你的算法时间复杂度必须是 O(log n) 级别。
+        /// 如果数组中不存在目标值，返回[-1, -1]。
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public int[] SearchRange(int[] nums, int target)
+        {
+            var res = new int[] { -1, -1 };
+            if (nums.Length <= 0) return res;
+            var min = int.MaxValue;
+            var max = int.MinValue;
+            var l = 0;
+            var r = nums.Length - 1;
+            void f(int[] nums, int l, int r)
+            {
+                if (l == r)
+                {
+                    if (target == nums[l])
+                    {
+                        min = Math.Min(min, l);
+                        max = Math.Max(max, l);
+                    }
+                    return;
+                }
+
+                var mid = (l + r) >> 1;
+                if (nums[mid] == target)
+                {
+                    min = Math.Min(min, mid);
+                    max = Math.Max(max, mid);
+                    f(nums, l, mid);
+                    f(nums, mid + 1, r);
+
+                }
+                else if (nums[mid] < target)
+                {
+                    f(nums, mid + 1, r);
+                }
+                else
+                {
+                    f(nums, l, mid);
+                }
+            }
+            f(nums, l, r);
+
+            res[0] = min == int.MaxValue ? -1 : min;
+            res[1] = max == int.MinValue ? -1 : max;
+
+            return res;
+        }
+        /// <summary>
+        /// 组合总和
+        /// 给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+        /// candidates 中的数字可以无限制重复被选取。
+        /// 说明：
+        /// 所有数字（包括 target）都是正整数。
+        /// 解集不能包含重复的组合。 
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/combination-sum
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="candidates"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public IList<IList<int>> CombinationSum(int[] candidates, int target)
+        {
+            var res = new List<List<int>>();
+            Array.Sort(candidates);
+
+            void dfs(int t, List<int> list)
+            {
+                foreach (var item in candidates)
+                {
+                    if (item == t)
+                    {
+                        if (list.Count > 0 && list[list.Count - 1] > item)
+                            continue;
+                        var tmp = new List<int>(list);
+                        tmp.Add(item);
+                        res.Add(tmp);
+                    }
+                    else if (t > item)
+                    {
+                        if (list.Count > 0 && list[list.Count - 1] > item)
+                            continue;
+                        var tmp = new List<int>(list);
+                        tmp.Add(item);
+                        dfs(t - item, tmp);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            dfs(target, new List<int>());
+
+            return res.ToArray();
+        }
+
+        /// <summary>
+        /// 接雨水
+        /// 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+        /// 上面是由数组[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/trapping-rain-water
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public int Trap(int[] height)
+        {
+            if (height.Length <= 0) return 0;
+            var maxInx = 0;
+            var max = height[0];
+            // 寻找最高的柱子
+            for (var i = 0; i < height.Length; ++i)
+            {
+                if (height[i] > max)
+                {
+                    max = height[i];
+                    maxInx = i;
+                }
+            }
+
+            // 从左侧往高柱子处取水
+            var res = 0;
+            for (var i = 0; i <= maxInx; ++i)
+            {
+                var tmp = 0;
+                for (var j = i + 1; j <= maxInx; ++j)
+                {
+                    if (height[j] >= height[i])
+                    {
+                        res += tmp;
+                        //取好水后应从当前最高处继续取水
+                        i = j - 1;
+                        break;
+                    }
+                    tmp += height[i] - height[j];
+                }
+            }
+
+            // 从右侧往高柱子处取水
+            for (var i = height.Length - 1; i >= maxInx; --i)
+            {
+                var tmp = 0;
+                for (var j = i - 1; j >= maxInx; --j)
+                {
+                    if (height[j] >= height[i])
+                    {
+                        res += tmp;
+                        //取好水后应从当前最高处继续取水
+                        i = j + 1;
+                        break;
+                    }
+                    tmp += height[i] - height[j];
+                }
+            }
+            return res;
+        }
+
+        /// <summary>
+        /// 全排列
+        /// 给定一个 没有重复 数字的序列，返回其所有可能的全排列。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public IList<IList<int>> Permute(int[] nums)
+        {
+            var res = new List<List<int>>();
+            res.Add(new List<int>(nums));
+
+            // 计算下一个全排列数列
+            void GetNextPermute(int[] nums)
+            {
+                var flg = false;
+                // 从后往前遍历 寻找第一个打破单调增的数
+                // 将单调增数列中最小的且大于当前数的数  与 其交换位置
+                // 然后将其后数列逆序为单调减 即为下一个全排列数列
+                // 若当前数列已经是最大的全排列数列 则整体逆序为解
+                for (var i = nums.Length - 2; i >= 0; --i)
+                {
+                    if (nums[i] < nums[i + 1])
+                    {
+                        flg = true;
+                        var inx = nums.Length - 1;
+                        for (var j = i + 1; j < nums.Length; ++j)
+                        {
+                            if (nums[j] < nums[i])
+                            {
+                                inx = j - 1;
+                                break;
+                            }
+                        }
+                        var tmp = nums[i];
+                        nums[i] = nums[inx];
+                        nums[inx] = tmp;
+                        if (i + 1 < nums.Length - 1)
+                            Array.Reverse(nums, i + 1, nums.Length - i - 1);
+                        break;
+                    }
+                }
+                if (!flg)
+                {
+                    Array.Reverse(nums);
+                }
+            }
+            // 计算阶乘
+            int fun(int len)
+            {
+                if (len == 1) return 1;
+                return len * fun(len - 1);
+            }
+
+            for (var i = 1; i < fun(nums.Length); ++i)
+            {
+                GetNextPermute(nums);
+                res.Add(new List<int>(nums));
+            }
+
+            return res.ToArray();
+        }
+
+        /// <summary>
+        /// 旋转图像
+        /// 给定一个 n × n 的二维矩阵表示一个图像。
+        /// 将图像顺时针旋转 90 度。
+        /// 说明：
+        /// 你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/rotate-image
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="matrix"></param>
+        public void Rotate(int[][] matrix)
+        {
+            var list = new List<List<int>>();
+            for (var i = 0; i < matrix.Length; ++i)
+            {
+                list.Add(new List<int>());
+                for (var j = matrix[i].Length - 1; j >= 0; --j)
+                {
+                    list[i].Add(matrix[j][i]);
+                }
+            }
+
+            for (var i = 0; i < matrix.Length; ++i)
+            {
+                for (var j = 0; j < matrix.Length; ++j)
+                {
+                    matrix[i][j] = list[i][j];
+                }
+            }
+        }
+
+        /// <summary>
+        /// 编辑距离
+        /// 给你两个单词 word1 和 word2，请你计算出将 word1转换成 word2 所使用的最少操作数 。
+        /// 你可以对一个单词进行如下三种操作：
+        ///     1. 插入一个字符
+        ///     2. 删除一个字符
+        ///     3. 替换一个字符
+        /// 来源：力扣（LeetCode）
+        /// 链接：https://leetcode-cn.com/problems/edit-distance
+        /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+        /// </summary>
+        /// <param name="word1"></param>
+        /// <param name="word2"></param>
+        /// <returns></returns>
+        public int MinDistance(string word1, string word2)
+        {
+            // dp[i,j] => word1 前i位 转为 word2 前j位 需要的操作数
+            // 初始化，默认前0为 转为 前 i 位 需要 i个操作
+            //    dp[i,0] => { 0, 1, 2, 3 .. i}
+            //    dp[0,j] => { 0, 1, 2, 3 .. j} 
+            // 状态转移，
+            //    dp[i,j] = min(dp[i-1,j-1],dp[i,j-1],dp[i-1,j]) + 1; (word1[i] == word2[j])
+            //    dp[i,j] = dp[i-1,j-1];
+            var dp = new int[word1.Length + 1, word2.Length + 1];
+            for (var i = 0; i < word1.Length + 1; ++i)
+                dp[i, 0] = i;
+            for (var i = 0; i < word2.Length + 1; ++i)
+                dp[0, i] = i;
+
+            for (var i = 0; i < word2.Length; ++i)
+            {
+                for (var j = 0; j < word1.Length; ++j)
+                {
+                    if (word1[j] == word2[i])
+                        dp[j + 1, i + 1] = dp[j, i];
+                    else
+                        dp[j + 1, i + 1] = Math.Min(Math.Min(dp[j, i], dp[j + 1, i]), dp[j, i + 1]) + 1;
+
+                }
+            }
+            return dp[word1.Length, word2.Length];
+        }
+
+        /// <summary>
+        /// 字母异位词分组  
+        /// 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+        /// 说明：
+        /// 所有输入均为小写字母。不考虑答案输出的顺序。
+        /// </summary>
+        /// <param name="strs"></param>
+        /// <returns></returns>
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            var dic = new Dictionary<string, List<string>>();
+
+            foreach (var str in strs)
+            {
+                var tmp = str.ToCharArray();
+                Array.Sort(tmp);
+                var tmpStr = new string(tmp);
+                if (!dic.TryGetValue(tmpStr, out var list))
+                    dic.Add(tmpStr, new List<string>());
+                dic[tmpStr].Add(str);
+            }
+
+            var res = new List<List<string>>();
+            foreach (var (_, v) in dic)
+            {
+                res.Add(v);
+            }
+
+            return res.ToArray();
+        }
+
+        /// <summary>
+        /// 最大子序和
+        /// 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+        /// 进阶:
+        ///    如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int MaxSubArray(int[] nums)
+        {
+            if (nums == null || nums.Length <= 0)
+                return 0;
+
+            var max = nums[0];
+            var front = nums[0];
+            for (var i = 1; i < nums.Length; ++i)
+            {
+                front = Math.Max(nums[i], front + nums[i]);
+                max = Math.Max(max, front);
+            }
+
+            return max;
+        }
+
+        /// <summary>
+        /// 跳跃游戏
+        /// 给定一个非负整数数组，你最初位于数组的第一个位置。
+        /// 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+        /// 判断你是否能够到达最后一个位置。
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public bool CanJump(int[] nums)
+        {
+            if (nums.Length <= 0) return false;
+            if (nums.Length == 1) return true;
+            if (nums[0] == 0) return false;
+            var flg = true;
+            for (var i = nums.Length - 1 - 1; i >= 0; --i)
+            {
+                if (nums[i] != 0) continue;
+                for (var j = i - 1; j >= 0; --j)
+                {
+                    if (nums[j] >= (i - j + 1))
+                        break;
+                    if (j == 0)
+                        flg = false;
+                }
+                if (flg == false)
+                    break;
+            }
+            return flg;
+        }
     }
 }

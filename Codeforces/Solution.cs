@@ -1568,5 +1568,134 @@ namespace Codeforces
             Console.WriteLine(n > 0 ? arrs[0] : 0);
         }
         #endregion
+
+        #region round 644 div3
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void Minimal_Square_round_A()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+                var a = arr[0];
+                var b = arr[1];
+                if (a == b)
+                    Console.WriteLine($"{a * a * 4}");
+                else if (a > b)
+                {
+                    var res = b * 2 > a ? b * b * 4 : a * a;
+                    Console.WriteLine($"{res}");
+                }
+                else if (a < b)
+                {
+                    var res = a * 2 > b ? a * a * 4 : b * b;
+                    Console.WriteLine($"{res}");
+                }
+            }
+        }
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void Honest_Coach_round_B()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+                if (n == 2)
+                {
+                    Console.WriteLine(Math.Abs(arr[0] - arr[1]));
+                    continue;
+                }
+
+                Array.Sort(arr);
+                var res = long.MaxValue;
+                for (var i = 1; i < n; ++i)
+                {
+                    res = Math.Min(res, arr[i] - arr[i - 1]);
+                }
+                Console.WriteLine(res);
+            }
+        }
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void Similar_Pairs_round_C()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var n = int.Parse(Console.ReadLine());
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+
+                Array.Sort(arr);
+                var even = 0;
+                var one = 0;
+                var sub1 = 0;
+                if ((arr[0] & 1) == 1)
+                    one++;
+                else
+                    even++;
+
+                for (var i = 1; i < n; ++i)
+                {
+                    if ((arr[i] & 1) == 1)
+                        one++;
+                    else
+                        even++;
+                    if (arr[i] - arr[i - 1] == 1)
+                        sub1++;
+                }
+
+                if ((one & 1) == 0 && (even & 1) == 0)
+                    Console.WriteLine("YES");
+                else
+                {
+                    if (sub1 > 0)
+                        Console.WriteLine("YES");
+                    else
+                        Console.WriteLine("NO");
+                }
+            }
+        }
+        /// <summary>
+        /// AC
+        /// </summary>
+        public void Buying_Shovels_D()
+        {
+            var t = int.Parse(Console.ReadLine());
+            while (t-- > 0)
+            {
+                var arr = Utilities.GetLongArray(Console.ReadLine());
+                var n = arr[0];
+                var k = arr[1];
+
+                var res = long.MaxValue;
+                if (n == k)
+                {
+                    res = 1;
+                }
+                else
+                {
+                    for (var i = 1; i <= Math.Sqrt(n); ++i)
+                    {
+                        if (n % i == 0)
+                        {
+                            if (i <= k)
+                                res = Math.Min(res, n / i);
+                            if (n / i <= k)
+                                res = Math.Min(res, i);
+                        }
+                    }
+                }
+                if (res == 0L)
+                    res = n;
+                Console.WriteLine(res);
+            }
+        }
+        #endregion
     }
 }
