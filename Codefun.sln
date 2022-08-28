@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datastructure", "Datastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm", "Algorithm\Algorithm.csproj", "{012F9138-1C82-4CAA-98D0-84ADBF52A06B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpBase", "CSharpBase\CSharpBase.csproj", "{9EB70D79-8079-41DC-89D6-F23C90C77B60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{012F9138-1C82-4CAA-98D0-84ADBF52A06B}.Release|x64.Build.0 = Release|Any CPU
 		{012F9138-1C82-4CAA-98D0-84ADBF52A06B}.Release|x86.ActiveCfg = Release|Any CPU
 		{012F9138-1C82-4CAA-98D0-84ADBF52A06B}.Release|x86.Build.0 = Release|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Debug|x64.Build.0 = Debug|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Debug|x86.Build.0 = Debug|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Release|x64.ActiveCfg = Release|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Release|x64.Build.0 = Release|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Release|x86.ActiveCfg = Release|Any CPU
+		{9EB70D79-8079-41DC-89D6-F23C90C77B60}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
