@@ -60,7 +60,36 @@ func (in *R) NextString() string {
 }
 
 func main() {
-	CF1728C()
+	CF1728D()
+}
+func CF1728D() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		s := r.NextString()
+		i, j := 0, len(s)-1
+		res := "Draw"
+		for i < j {
+			if s[i] != s[j] {
+				res = "Alice"
+				break
+			}
+			i++
+			j--
+		}
+		if res == "Alice" {
+			for ; i < j; i += 2 {
+				if s[i] != s[i+1] {
+					break
+				}
+			}
+			if i > j {
+				res = "Draw"
+			}
+		}
+		fmt.Println(res)
+	}
 }
 func CF1728C() {
 	r := NewR(bufio.NewReader(os.Stdin))
