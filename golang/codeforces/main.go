@@ -60,7 +60,181 @@ func (in *R) NextString() string {
 }
 
 func main() {
-	CF1728D()
+	CF1927E()
+}
+
+func CF1927E() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n, k := r.NextInt(), r.NextInt()
+		s := n / k
+		m := n % k
+		if m > 0 {
+			s++
+		}
+		ans := make([]int, n)
+		tmp := -1
+		max := 0
+		current := max
+		up := false
+		for i := 0; i < k; i++ {
+			up = !up
+			tmp *= -1
+			if up {
+				current = max + 1
+			} else {
+				current = max + s
+			}
+
+			for j := 0; j < s; j++ {
+				ans[j*k+i] = current + tmp*j
+				if ans[j*k+i] > max {
+					max = ans[j*k+i]
+				}
+			}
+			m--
+			if m == 0 {
+				s--
+			}
+		}
+		fmt.Print(ans[0])
+		for i := 1; i < n; i++ {
+			fmt.Print(" ", ans[i])
+		}
+		fmt.Println()
+	}
+}
+
+func CF1927D() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		l := make([]int, n)
+		for i := 0; i < n; i++ {
+			l[i] = r.NextInt()
+		}
+		next := make(map[int]int)
+		for i := n - 1; i >= 0; i-- {
+			if i == n-1 {
+				next[i] = n
+			} else {
+				if l[i] == l[i+1] {
+					next[i] = next[i+1]
+				} else {
+					next[i] = i + 1
+				}
+			}
+		}
+		q := r.NextInt()
+		for i := 0; i < q; i++ {
+			a, b := r.NextInt()-1, r.NextInt()-1
+			if a == b {
+				fmt.Println("-1 -1")
+			} else {
+				if a > b {
+					a, b = b, a
+				}
+				if next[a] == 0 || next[a] > b {
+					fmt.Println("-1 -1")
+				} else {
+					fmt.Println(a+1, next[a]+1)
+				}
+			}
+		}
+	}
+}
+
+func CF1927C() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		m := r.NextInt()
+		k := r.NextInt()
+		l := make(map[int32]struct{})
+		rr := make(map[int32]struct{})
+		for i := 0; i < n; i++ {
+			tmp := r.NextInt()
+			if tmp > k {
+				continue
+			}
+			l[int32(tmp)] = struct{}{}
+		}
+		for i := 0; i < m; i++ {
+			tmp := r.NextInt()
+			if tmp > k {
+				continue
+			}
+			rr[int32(tmp)] = struct{}{}
+		}
+		if len(l) < (k/2) || len(rr) < (k/2) {
+			fmt.Println("NO")
+		} else {
+			for k := range l {
+				rr[k] = struct{}{}
+			}
+			if len(rr) != k {
+				fmt.Println("NO")
+			} else {
+				fmt.Println("YES")
+			}
+		}
+	}
+}
+
+func CF1927B() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		latin := make(map[uint8]int32, 26)
+
+		for i := uint8('a'); i <= uint8('z'); i++ {
+			latin[i] = 0
+		}
+
+		for i := 0; i < n; i++ {
+			j := r.NextInt()
+			// fmt.Println(fmt.Sprintf("get j: %v", j))
+			var tmp uint8
+			for k, v := range latin {
+				if int(v) == j {
+					latin[k]++
+					tmp = k
+					break
+				}
+			}
+			fmt.Print(string(tmp))
+		}
+		fmt.Println()
+	}
+}
+func CF1927A() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		s := r.NextString()
+		l, r := -1, -1
+		for i := 0; i < n; i++ {
+			if s[i] == 'B' {
+				if l == -1 {
+					l = i
+					r = l + 1
+				} else {
+					r = i + 1
+				}
+			}
+		}
+		fmt.Println(r - l)
+	}
 }
 func CF1728D() {
 	r := NewR(bufio.NewReader(os.Stdin))
