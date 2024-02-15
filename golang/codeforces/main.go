@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -60,7 +61,87 @@ func (in *R) NextString() string {
 }
 
 func main() {
-	CF1927E()
+	CF1928B()
+}
+
+func CF1928B() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		l := make([]int, n)
+		for i := 0; i < n; i++ {
+			l[i] = r.NextInt()
+		}
+		sort.Slice(l, func(i, j int) bool {
+			return l[i] < l[j]
+		})
+		max, ans := 1, 1
+		left, right := 0, 0
+		for left < n && right < n {
+			if left == right {
+				right++
+				ans = 1
+				continue
+			}
+
+			if l[left] == l[right] {
+				left++
+				right++
+				continue
+			}
+
+			if l[right] == l[right-1] {
+				right++
+				continue
+			}
+
+			if left+1 < n && l[left+1] == l[left] {
+				left++
+				continue
+			}
+
+			if l[right]-l[left] < n {
+				ans++
+				if ans > max {
+					max = ans
+				}
+				right++
+			} else {
+				left++
+				ans--
+			}
+		}
+
+		fmt.Println(max)
+	}
+}
+
+func CF1928A() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		a, b := r.NextInt(), r.NextInt()
+		if a&1 == 1 && b&1 == 1 {
+			fmt.Println("NO")
+		} else if a&1 == 1 && b&1 == 0 {
+			if a+a == b {
+				fmt.Println("NO")
+			} else {
+				fmt.Println("YES")
+			}
+		} else if a&1 == 0 && b&1 == 1 {
+			if a == b+b {
+				fmt.Println("NO")
+			} else {
+				fmt.Println("YES")
+			}
+		} else {
+			fmt.Println("YES")
+		}
+	}
 }
 
 func CF1927E() {
