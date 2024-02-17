@@ -61,7 +61,52 @@ func (in *R) NextString() string {
 }
 
 func main() {
-	CF1928B()
+	CF1929B()
+}
+func CF1929B() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n, k := r.NextInt(), r.NextInt()
+		s := 4*n - 2
+		ans := 1
+		if k == s {
+			ans = n * 2
+		} else {
+			ans = k / 2
+			if k%2 > 0 {
+				ans++
+			}
+		}
+		fmt.Println(ans)
+	}
+}
+
+func CF1929A() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		min, max := -1, -1
+		for i := 0; i < n; i++ {
+			tmp := r.NextInt()
+			if min == -1 {
+				min = tmp
+			}
+			if max == -1 {
+				max = tmp
+			}
+			if tmp > max {
+				max = tmp
+			}
+			if tmp < min {
+				min = tmp
+			}
+		}
+		fmt.Println(max - min)
+	}
 }
 
 func CF1928B() {
