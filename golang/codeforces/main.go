@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type R struct {
@@ -61,7 +62,160 @@ func (in *R) NextString() string {
 }
 
 func main() {
-	CF1929B()
+	CF1930B()
+}
+
+var ans []int
+
+func f(left, right int, list []int, maxSame, tmp int) (int, int) {
+	if left == right {
+		res := list[left] + left + 1
+		if res == maxSame {
+			res -= tmp
+		}
+		return res, left
+	} else if left > right {
+		return -1, -1
+	}
+	max, maxInx := -1, -1
+	for i := left; i <= right; i++ {
+		if i+list[i]+1 > max {
+			max = i + list[i] + 1
+			maxInx = i
+		}
+	}
+	max -= tmp
+	rightTmp := tmp
+	if max == maxSame {
+		max -= tmp
+		rightTmp = tmp + 1
+	}
+
+	mm, _ := f(maxInx+1, right, list, max, rightTmp+1)
+	if mm > 0 {
+		ans = append(ans, mm)
+	}
+	mm, _ = f(left, maxInx-1, list, -1, tmp)
+	if mm > 0 {
+		ans = append(ans, mm)
+	}
+
+	return max, maxInx
+}
+func CF1930C() { // ERROR
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		ans = ans[:0]
+		n := r.NextInt()
+		l := make([]int, n)
+		for i := 0; i < n; i++ {
+			l[i] = r.NextInt()
+		}
+		left, right := 0, n-1
+
+		mm, _ := f(left, right, l, 0, 0)
+		ans = append(ans, mm)
+		sort.Slice(ans, func(i, j int) bool {
+			return ans[i] > ans[j]
+		})
+
+		fmt.Print(ans[0])
+		for i := 1; i < n; i++ {
+			if ans[i] == ans[i-1] {
+				continue
+			}
+			fmt.Print(" ", ans[i])
+		}
+		fmt.Println()
+	}
+
+}
+func CF1930B() { // ERROR
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		i := 2
+		j := n
+		ans := "1"
+		flag := true
+		t := time.Now()
+		for n > 0 {
+			if flag {
+				ans = strconv.Itoa(j) + " " + ans
+				n--
+				if n == 0 {
+					break
+				}
+				j--
+				ans = ans + " " + strconv.Itoa(j)
+				n--
+				if n == 0 {
+					break
+				}
+				j--
+
+			} else {
+				if n%2 == 0 {
+					ans = ans + " " + strconv.Itoa(i)
+					n--
+					if n == 0 {
+						break
+					}
+					i++
+					ans = strconv.Itoa(i) + " " + ans
+					n--
+					if n == 0 {
+						break
+					}
+					i++
+
+				} else {
+					ans = strconv.Itoa(i) + " " + ans
+					n--
+					if n == 0 {
+						break
+					}
+					i++
+					ans = ans + " " + strconv.Itoa(i)
+					n--
+					if n == 0 {
+						break
+					}
+					i++
+
+				}
+
+			}
+			flag = !flag
+		}
+		fmt.Println(time.Since(t))
+		fmt.Println(ans)
+		fmt.Println(time.Since(t))
+	}
+}
+func CF1930A() {
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		l := make([]int, n+n)
+		for i := 0; i < n+n; i++ {
+			l[i] = r.NextInt()
+		}
+		sort.Slice(l, func(i, j int) bool {
+			return l[i] > l[j]
+		})
+		ans := 0
+		for i := 0; i < n+n; i += 2 {
+			ans += l[i+1]
+		}
+		fmt.Println(ans)
+	}
 }
 func CF1929B() {
 	r := NewR(bufio.NewReader(os.Stdin))
