@@ -66,5 +66,5 @@ func (in *R) GetSlice(n int) []int {
 	return l
 }
 func main() {
-	CF1931F()
+	CF1918C()
 }
