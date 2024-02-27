@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -66,5 +67,5 @@ func (in *R) GetSlice(n int) []int {
 	return l
 }
 func main() {
-	CF1923C()
+	CF1923D()
 }

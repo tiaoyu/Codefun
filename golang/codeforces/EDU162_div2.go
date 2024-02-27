@@ -123,3 +123,122 @@ func CF1923C() {
 		}
 	}
 }
+
+func CF1923D() { //TLE
+	r := NewR(bufio.NewReader(os.Stdin))
+	t := r.NextInt()
+	for t > 0 {
+		t--
+		n := r.NextInt()
+		l, sum := make([]int, n), make([]int, n+1)
+		for i := 1; i <= n; i++ {
+			l[i-1] = r.NextInt()
+			sum[i] += sum[i-1]
+		}
+		lr := func(left, right, curV int) (int, bool) {
+			if left > right {
+				return -1, false
+			}
+			cnt := 1
+			s := 0
+			tmp := 0
+			flag := false
+			for j := left; j <= right; j++ {
+				if l[j] != l[j-1] {
+					s = s + tmp + l[j]
+					tmp = 0
+					if s > curV {
+						flag = true
+						break
+					}
+				} else {
+					if s > l[j] {
+						s = s + tmp + l[j]
+						tmp = 0
+						if s > curV {
+							flag = true
+							break
+						}
+					} else {
+						tmp += l[j]
+					}
+				}
+				cnt++
+			}
+			if flag {
+				return cnt, true
+			} else {
+				return -1, true
+			}
+		}
+		rl := func(left, right, curV int) (int, bool) {
+			ok := false
+			if left > right {
+				return -1, ok
+			}
+			cnt := 1
+			s := 0
+			tmp := 0
+			flag := false
+			for j := right; j >= left; j-- {
+				if l[j] != l[j+1] {
+					s = s + tmp + l[j]
+					tmp = 0
+					if s > curV {
+						flag = true
+						break
+					}
+				} else {
+					if s > l[j] {
+						s = s + tmp + l[j]
+						tmp = 0
+						if s > curV {
+							flag = true
+							break
+						}
+					} else {
+						tmp += l[j]
+					}
+				}
+				cnt++
+			}
+			if flag {
+				return cnt, true
+			} else {
+				return -1, true
+			}
+		}
+		ans := make([]int, n)
+
+		for i, v := range l {
+			a, ok1 := rl(0, i-1, v)
+			b, ok2 := lr(i+1, len(l)-1, v)
+
+			if ok1 && ok2 {
+				if a == -1 {
+					ans[i] = b
+				} else if b == -1 {
+					ans[i] = a
+				} else {
+					if a < b {
+						ans[i] = a
+					} else {
+						ans[i] = b
+					}
+				}
+			} else if ok1 {
+				ans[i] = a
+			} else if ok2 {
+				ans[i] = b
+			} else {
+				ans[i] = -1
+			}
+		}
+
+		fmt.Print(ans[0])
+		for i := 1; i < n; i++ {
+			fmt.Print(" ", ans[i])
+		}
+		fmt.Println()
+	}
+}
