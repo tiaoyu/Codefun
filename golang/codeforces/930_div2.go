@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func CF1937A() {
@@ -30,31 +31,30 @@ func CF1937B() {
 		grid[0] = r.NextString()
 		grid[1] = r.NextString()
 
-		ans := string(grid[0][0])
+		ans := strings.Builder{}
+		ans.WriteString(string(grid[0][0]))
 		min := 1
 		finish := true
 		for i := 1; i < n; i++ {
 			if grid[0][i] == grid[1][i-1] {
-				ans += string(grid[0][i])
+				ans.WriteString(string(grid[0][i]))
 				min++
 			} else if grid[0][i] < grid[1][i-1] {
-				ans += string(grid[0][i])
+				ans.WriteString(string(grid[0][i]))
 				min = 1
 			} else {
-				ans = ans + string(grid[1][i-1]) + string(grid[1][i:])
+				ans.WriteString(string(grid[1][i-1]) + string(grid[1][i:]))
 				finish = false
 				break
 			}
 		}
 		if finish {
-			ans += string(grid[1][n-1])
+			ans.WriteString(string(grid[1][n-1]))
 		}
-		fmt.Println(ans)
+		fmt.Println(ans.String())
 		fmt.Println(min)
-
 	}
 }
-
 func CF1937D() { // TLE
 	r := NewR(bufio.NewReader(os.Stdin))
 	t := r.NextInt()

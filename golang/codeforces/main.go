@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -67,13 +66,5 @@ func (in *R) GetSlice(n int) []int {
 	return l
 }
 func main() {
-	CF1937D()
+	CF1937B()
 }
-
-// func CF1937A() {
-// 	r := NewR(bufio.NewReader(os.Stdin))
-// 	t := r.NextInt()
-// 	for t > 0 {
-// 		t--
-// 	}
-// }
